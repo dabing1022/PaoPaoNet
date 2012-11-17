@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:d13233c0bd9746e65c78baee96f6cb80$ -->
+<TextureAtlas imagePath="AtlasTexture.png">
+    <SubTexture name="baipingguo1" x="122" y="116" width="88" height="98" frameX="-5" frameY="0" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="baipingguo2" x="262" y="292" width="40" height="44" frameX="-4" frameY="-4" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="bulletForTip" x="122" y="2" width="112" height="112"/>
+    <SubTexture name="caomei1" x="2" y="224" width="82" height="100" frameX="-7" frameY="0" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="caomei2" x="72" y="354" width="40" height="50" frameX="-4" frameY="0" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="changjinglu" x="114" y="354" width="52" height="98" frameX="-23" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="chengzi1" x="332" y="196" width="92" height="96" frameX="-2" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="chengzi2" x="64" y="428" width="48" height="50" frameX="-1" frameY="0" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="chilun0001" x="168" y="402" width="48" height="48" frameX="-5" frameY="-5" frameWidth="56" frameHeight="56"/>
+    <SubTexture name="chilun0002" x="196" y="300" width="48" height="48" frameX="-5" frameY="-5" frameWidth="56" frameHeight="56"/>
+    <SubTexture name="chilun0003" x="168" y="352" width="48" height="48" frameX="-5" frameY="-5" frameWidth="56" frameHeight="56"/>
+    <SubTexture name="chilun0004" x="164" y="454" width="48" height="48" frameX="-5" frameY="-5" frameWidth="56" frameHeight="56"/>
+    <SubTexture name="chilun0005" x="114" y="454" width="48" height="48" frameX="-5" frameY="-5" frameWidth="56" frameHeight="56"/>
+    <SubTexture name="coin" x="2" y="428" width="60" height="50"/>
+    <SubTexture name="color1" x="224" y="128" width="10" height="10"/>
+    <SubTexture name="color2" x="212" y="128" width="10" height="10"/>
+    <SubTexture name="color3" x="224" y="116" width="10" height="10"/>
+    <SubTexture name="color4" x="212" y="116" width="10" height="10"/>
+    <SubTexture name="color5" x="110" y="130" width="10" height="10"/>
+    <SubTexture name="color6" x="110" y="118" width="10" height="10"/>
+    <SubTexture name="color7" x="110" y="106" width="10" height="10"/>
+    <SubTexture name="color8" x="110" y="94" width="10" height="10"/>
+    <SubTexture name="daxiang" x="86" y="254" width="70" height="98" frameX="-14" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="gun0001" x="2" y="48" width="108" height="44" frameX="-1" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="gun0002" x="334" y="48" width="96" height="44" frameX="-1" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="gun0003" x="212" y="198" width="86" height="44" frameX="0" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="gun0004" x="334" y="2" width="96" height="44" frameX="0" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="gun0005" x="2" y="94" width="106" height="44" frameX="-1" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="gun0006" x="2" y="2" width="118" height="44" frameX="0" frameY="-1" frameWidth="120" frameHeight="46"/>
+    <SubTexture name="houzi" x="432" y="2" width="78" height="100" frameX="-12" frameY="0" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="lanmei1" x="2" y="140" width="86" height="82" frameX="-9" frameY="-11" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="lanmei2" x="212" y="244" width="48" height="46" frameX="-1" frameY="-2" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="levelImg" x="2" y="480" width="52" height="24" frameX="-4" frameY="0" frameWidth="60" frameHeight="24"/>
+    <SubTexture name="li1" x="2" y="326" width="68" height="100" frameX="-16" frameY="0" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="li2" x="176" y="216" width="34" height="50" frameX="-7" frameY="0" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="loginBtnBg" x="90" y="216" width="84" height="36"/>
+    <SubTexture name="putao1" x="430" y="104" width="76" height="100" frameX="-17" frameY="0" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="putao2" x="158" y="300" width="36" height="50" frameX="-9" frameY="0" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="wumei1" x="236" y="2" width="96" height="96" frameX="-1" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="wumei2" x="214" y="452" width="46" height="46" frameX="-2" frameY="-2" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="xigua1" x="426" y="206" width="84" height="92" frameX="-8" frameY="-3" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="xigua2" x="262" y="244" width="42" height="46" frameX="-4" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="xingxing" x="236" y="100" width="94" height="96" frameX="-5" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="zhu" x="334" y="94" width="94" height="100" frameX="-6" frameY="0" frameWidth="100" frameHeight="100"/>
+</TextureAtlas>

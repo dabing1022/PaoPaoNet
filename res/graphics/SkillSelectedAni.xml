@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="SkillSelectedAni.png">
+	<!-- Created with Adobe Flash CS6 version 12.0.0.481 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="skillAni0000" x="386" y="190" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0001" x="447" y="190" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0002" x="122" y="191" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0003" x="324" y="191" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0004" x="183" y="192" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0005" x="0" y="193" width="59" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0006" x="397" y="0" width="63" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0007" x="268" y="0" width="65" height="60" frameX="-1" frameY="-1" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0008" x="201" y="0" width="65" height="61" frameX="-1" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0009" x="397" y="63" width="65" height="59" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0010" x="134" y="64" width="65" height="59" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0011" x="0" y="66" width="65" height="59" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0012" x="67" y="67" width="65" height="59" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0013" x="330" y="67" width="65" height="59" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0014" x="134" y="0" width="65" height="62" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0015" x="68" y="0" width="64" height="65" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0016" x="0" y="0" width="66" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0017" x="268" y="62" width="60" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0018" x="397" y="124" width="59" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0019" x="134" y="125" width="59" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0020" x="0" y="127" width="59" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0021" x="61" y="128" width="59" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0022" x="263" y="128" width="59" height="64" frameX="-1" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0023" x="201" y="63" width="60" height="64" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0024" x="335" y="0" width="60" height="65" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0025" x="244" y="194" width="60" height="59" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0026" x="385" y="253" width="60" height="59" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0027" x="447" y="253" width="60" height="59" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0028" x="61" y="254" width="60" height="59" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0029" x="306" y="254" width="60" height="59" frameX="0" frameY="-2" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0030" x="324" y="128" width="60" height="61" frameX="0" frameY="0" frameWidth="67" frameHeight="67"/>
+	<SubTexture name="skillAni0031" x="195" y="129" width="60" height="61" frameX="0" frameY="0" frameWidth="67" frameHeight="67"/>
+</TextureAtlas>

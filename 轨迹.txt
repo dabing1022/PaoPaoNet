@@ -1,0 +1,188 @@
+/**道具移动路线类型
+		 * 0--------------直线型
+		 * 1--------------对角线型
+		 * 2--------------矩形
+		 * 3--------------圆形
+		 * */
+
+========================================================================================================================
+
+0----TrackLine直线型
+ 		case 0://左到右的直线
+                    startX = -100;
+                    startY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.25;
+                    endX = Const.WIDTH + 100;
+                    endY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.25;
+		            break;
+		        case 1://右到左的直线
+                    startX = Const.WIDTH + 100;
+                    startY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.25;
+                    endX = -100;
+                    endY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.25;
+		            break;
+		        case 2://上到下的直线
+                    startX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.25;
+                    startY = -100;
+                    endX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.25;
+                    endY = Const.HEIGHT + 100;
+		            break;
+                case 3://下到上的直线
+                    startX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.25;
+                    startY = Const.HEIGHT + 100;
+                    endX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.25;
+                    endY = -100;
+                    break;
+                case 4://下右到左上的直线
+                    startX = Const.WIDTH * 0.25 * Math.random() + Const.WIDTH * 0.5;
+                    startY = Const.HEIGHT + 100;
+                    endX = -100;
+                    endY = Const.HEIGHT * 0.5 * Math.random();
+                    break;
+                case 5://左上到下右的直线
+                    startX = -100;
+                    startY = Const.HEIGHT * 0.5 * Math.random();
+                    endX = Const.WIDTH * 0.25 * Math.random() + Const.WIDTH * 0.5;
+                    endY = Const.HEIGHT + 100;
+                    break;
+                case 6://下左到右上的直线
+                    startX = Const.WIDTH * 0.25 * Math.random() + Const.WIDTH * 0.25;
+                    startY = Const.HEIGHT + 100;
+                    endX = Const.WIDTH + 100;
+                    endY = Const.HEIGHT * 0.5 * Math.random();
+                    break;
+                case 7://右上到下左的直线
+                    startX = Const.WIDTH + 100;
+                    startY = Const.HEIGHT * 0.5 * Math.random();
+                    endX = Const.WIDTH * 0.25 * Math.random() + Const.WIDTH * 0.25;
+                    endY = Const.HEIGHT + 100;
+                    break;
+                case 8://右下到上左的直线
+                    startX = Const.WIDTH + 100;
+                    startY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.5;
+                    endX = Const.WIDTH * 0.5 * Math.random();
+                    endY = -100;
+                    break;
+                case 9://上左到右下的直线
+                    startX = Const.WIDTH * 0.5 * Math.random();
+                    startY = -100;
+                    endX = Const.WIDTH + 100;
+                    endY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.5;
+                    break;
+                case 10://左下到上右的直线
+                    startX = -100;
+                    startY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.5;
+                    endX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.5;
+                    endY = -100;
+                    break;
+                case 11://上右到左下的直线
+                    startX = Const.WIDTH * 0.5 * Math.random() + Const.WIDTH * 0.5;
+                    startY = -100;
+                    endX = -100;
+                    endY = Const.HEIGHT * 0.5 * Math.random() + Const.HEIGHT * 0.5;
+                    break;
+===========================================================================================================================
+===========================================================================================================================
+1---TrackC2C对角线型
+			case 0://右下到左上
+		            startX = Const.WIDTH + 100;
+                    startY = Const.HEIGHT + 100;
+                    endX = -100;
+                    endY = -100;
+		            break;
+		        case 1://左上到右下
+		            startX = -100;
+                    startY = -100;
+                    endX = Const.WIDTH + 100;
+                    endY = Const.HEIGHT + 100;
+		            break;
+		        case 2://左下到右上
+		            startX = -100;
+                    startY = Const.HEIGHT + 100;
+                    endX = Const.WIDTH + 100;
+                    endY = -100;
+		            break;
+		        case 3://右上到左下
+		            startX = Const.WIDTH + 100;
+                    startY = -100;
+                    endX = -100;
+                    endY = Const.HEIGHT + 100;
+		            break;
+=================================================================================================================================
+2---TrackRect  矩形
+				case 0:
+				{
+					pathArr.push(new Vector2D(116, 80));
+					pathArr.push(new Vector2D(790, 80));
+					pathArr.push(new Vector2D(790, 510));
+					pathArr.push(new Vector2D(116, 510));
+					break;
+				}
+				case 1:
+				{
+					pathArr.push(new Vector2D(190, 114));
+					pathArr.push(new Vector2D(710, 114));
+					pathArr.push(new Vector2D(710, 476));
+					pathArr.push(new Vector2D(190, 476));
+					break;
+				}
+				case 2:
+				{
+					pathArr.push(new Vector2D(274, 160));
+					pathArr.push(new Vector2D(638, 160));
+					pathArr.push(new Vector2D(638, 412));
+					pathArr.push(new Vector2D(274, 412));
+					break;
+				}
+				case 3:
+				{
+					pathArr.push(new Vector2D(190, 114));
+					pathArr.push(new Vector2D(710, 114));
+					pathArr.push(new Vector2D(710, 476));
+					pathArr.push(new Vector2D(190, 476));
+					break;
+				}
+				default:
+				{
+					pathArr.push(new Vector2D(332, 200));
+					pathArr.push(new Vector2D(580, 200));
+					pathArr.push(new Vector2D(600, 372));
+					pathArr.push(new Vector2D(332, 372));
+					break;
+				}
+
+========================================================================================================================================
+3----TrackCircle  圆形
+				case 0:
+				{
+					pathArr.push(new Vector2D(340, 60));
+					pathArr.push(new Vector2D(540, 260));
+					pathArr.push(new Vector2D(340, 490));
+					pathArr.push(new Vector2D(120, 260));
+					break;
+				}
+				case 1:
+				{
+					pathArr.push(new Vector2D(440, 60));
+					pathArr.push(new Vector2D(640, 260));
+					pathArr.push(new Vector2D(440, 490));
+					pathArr.push(new Vector2D(220, 260));
+					break;
+				}
+				case 2:
+				{
+					pathArr.push(new Vector2D(540, 60));
+					pathArr.push(new Vector2D(740, 260));
+					pathArr.push(new Vector2D(540, 490));
+					pathArr.push(new Vector2D(320, 260));
+					break;
+				}
+				case 3:
+				{
+					pathArr.push(new Vector2D(440, 60));
+					pathArr.push(new Vector2D(740, 260));
+					pathArr.push(new Vector2D(440, 490));
+					pathArr.push(new Vector2D(120, 260));
+					break;
+				}
+============================================================================================================================================
+
