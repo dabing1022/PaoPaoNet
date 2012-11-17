@@ -8,20 +8,24 @@ package view.Recycle
 	import model.RecycleData;
 	
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	
 	public class RecycleBarView extends Sprite
 	{
+		private var frameLine:Shape;
+		private var frameBmpd:BitmapData;
+		private var squareQuad:Quad;
 		public var frameBarImg:Image;
-		private var contentImg:Image;
 		
 		public var numTxt:TextField;
 		private var recycleData:RecycleData;
 		public function RecycleBarView()
 		{
 			super();
+			
 			
 			recycleData = RecycleData.getInstance();
 			recycleData.addEventListener(RecycleEvent.RECYCLE_NUM_CHANGE, onBulletNumChange);
@@ -30,14 +34,20 @@ package view.Recycle
 			numTxt = new TextField(50, 50, num, "Verdana", 14, 0x000000, true);
 			addChild(numTxt);
 			
-			contentImg = new Image(Assets.getAtlas().getTexture("recycleWallContent"));
-			contentImg.x = contentImg.pivotX = 7.5;
-			contentImg.y = contentImg.pivotY = 356;
-			contentImg.scaleY = (recycleData.curBulletNum % recycleData.maxBulletNum) / recycleData.maxBulletNum;
-			trace("contentImg.scaleY -----------------" + contentImg.scaleY);
-			addChild(contentImg);
+			squareQuad = new Quad(10,300,0xff0000);
+			squareQuad.x = squareQuad.pivotX = 5;
+			squareQuad.y = squareQuad.pivotY = 300;
+			squareQuad.scaleY = (recycleData.curBulletNum % recycleData.maxBulletNum) / recycleData.maxBulletNum;
+			addChild(squareQuad);
 			
-			frameBarImg = new Image(Assets.getAtlas().getTexture("recycleWallFrame"));
+			frameLine = new Shape();
+			frameLine.graphics.lineStyle(5, 0x990000);
+			frameLine.graphics.drawRect(0, 0, 10, 300);
+			
+			frameBmpd = new BitmapData(10, 300, true, 0x000000);
+			frameBmpd.draw(frameLine);
+			var texture:Texture = Texture.fromBitmapData(frameBmpd);
+			frameBarImg = new Image(texture);
 			addChild(frameBarImg);
 		}
 		
@@ -45,8 +55,7 @@ package view.Recycle
 		{
 			var numShow:uint = uint(event.data) % (recycleData.maxBulletNum);
 			numTxt.text = numShow.toString();
-			contentImg.scaleY = (recycleData.curBulletNum % recycleData.maxBulletNum) / recycleData.maxBulletNum;
-			trace("contentImg.scaleY -----------------" + contentImg.scaleY);
+			squareQuad.scaleY = (recycleData.curBulletNum % recycleData.maxBulletNum) / recycleData.maxBulletNum;
 		}
 	}
 }

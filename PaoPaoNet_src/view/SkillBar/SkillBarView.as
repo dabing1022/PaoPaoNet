@@ -2,7 +2,6 @@ package view.SkillBar
 {
 	import flash.geom.Point;
 	
-	import starling.display.Image;
 	import starling.display.Sprite;
 	
 	public class SkillBarView extends Sprite
@@ -10,11 +9,10 @@ package view.SkillBar
 		private var _bulletBoxView1:BulletBoxView;
 		private var _bulletBoxView2:BulletBoxView;
 		private var _bulletBoxView3:BulletBoxView;
-		public static const BULLET_COORD1:Point = new Point(14, 10);
-		public static const BULLET_COORD2:Point = new Point(84,10);
-		public static const BULLET_COORD3:Point = new Point(156,10);
+		public static const BULLET_COORD1:Point = new Point(42,12);
+		public static const BULLET_COORD2:Point = new Point(120,12);
+		public static const BULLET_COORD3:Point = new Point(202,12);
 		private var _boxVec:Vector.<BulletBoxView>;
-		private var _skillBarBg:Image;
 		public function SkillBarView():void
 		{
 			super();
@@ -24,18 +22,15 @@ package view.SkillBar
 		private function init():void{
 			_boxVec = new Vector.<BulletBoxView>();
 			
-			_skillBarBg = new Image(Assets.getAtlas().getTexture("skillBg"));
-			addChild(_skillBarBg);
-			
-			_bulletBoxView1 = new BulletBoxView(1);
+			_bulletBoxView1 = new BulletBoxView();
 			_bulletBoxView1.x = BULLET_COORD1.x;
 			_bulletBoxView1.y = BULLET_COORD1.y;
 			
-			_bulletBoxView2 = new BulletBoxView(2);
+			_bulletBoxView2 = new BulletBoxView();
 			_bulletBoxView2.x = BULLET_COORD2.x;
 			_bulletBoxView2.y = BULLET_COORD2.y;
 			
-			_bulletBoxView3 = new BulletBoxView(3);
+			_bulletBoxView3 = new BulletBoxView();
 			_bulletBoxView3.x = BULLET_COORD3.x;
 			_bulletBoxView3.y = BULLET_COORD3.y;
 			

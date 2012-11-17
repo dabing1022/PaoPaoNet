@@ -21,7 +21,7 @@ package view.Level
 		private var bg:Quad;
 		private var levelNameTxt:TextField;
 		private var levelName:String;
-//		private var chilunAni:MovieClip;
+		private var chilunAni:MovieClip;
 		private var frameBmpd:BitmapData;
 		private var frameLine:Shape;
 		private var squareQuad:Quad;
@@ -39,11 +39,11 @@ package view.Level
 			levelNameTxt.x = 430;
 			levelNameTxt.y = (Const.HEIGHT >> 1) - 20;
 			
-//			chilunAni = new MovieClip(Assets.getAtlas().getTextures("chilun"), 30);
-//			addChild(chilunAni);
-//			Starling.juggler.add(chilunAni);
-//			chilunAni.x = 400;
-//			chilunAni.y = Const.HEIGHT >> 1;
+			chilunAni = new MovieClip(Assets.getAtlas().getTextures("chilun"), 30);
+			addChild(chilunAni);
+			Starling.juggler.add(chilunAni);
+			chilunAni.x = 400;
+			chilunAni.y = Const.HEIGHT >> 1;
 			
 			squareQuad = new Quad(500, 8, 0xffffff);
 			squareQuad.x = 220;

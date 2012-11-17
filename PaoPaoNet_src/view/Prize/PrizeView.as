@@ -21,8 +21,7 @@ package view.Prize
 	import utils.SoundManager;
 	import utils.Vector2D;
 	
-	import view.InfoBoard.FloatScoreManager;
-	import view.InfoBoard.InfoBoardViewManager;
+	import view.Score.ScoreManager;
 	import view.SkillBar.BulletBoxView;
 	import view.SkillBar.SkillBarManager;
 	
@@ -127,18 +126,18 @@ package view.Prize
 			e = null;
 			//shake
 			if(_energonColorIdVec.length > 0 &&_energonColorIdVec.lastIndexOf(id) == -1){
-//				SoundManager.getInstance().playSound("hurt", false);
+				SoundManager.getInstance().playSound("hurt", false);
 				shake();
 			}else{
-//				SoundManager.getInstance().playSound("dispear", false);
+				SoundManager.getInstance().playSound("dispear", false);
 			}
 		}
 
         /**淡出销毁处理*/
         public function fadeOutAndDestroy():void{
 			var scoreAdd:uint = this.prizeData.price * 10;       //分数按照价格的10倍处理
-			InfoBoardViewManager.getInstance().score += scoreAdd;
-			FloatScoreManager.getInstance().showFloatScore(this.x, this.y, scoreAdd);
+			ScoreManager.getInstance().score += scoreAdd;
+			ScoreManager.getInstance().showFloatScore(this.x, this.y, scoreAdd);
 				
 			var tween:Tween = new Tween(this, 1.0, Transitions.EASE_OUT);
 			tween.fadeTo(0);   
@@ -220,7 +219,7 @@ package view.Prize
 		
 		private function drawHitRect():void{
 			hitRect = new Quad(50, 50, 0x000000, true);
-			hitRect.alpha = 0.2;
+			hitRect.alpha = 0;
 			hitRect.x = _prizeImg.x + (_prizeImg.width - hitRect.width) * 0.5;
 			hitRect.y = _prizeImg.y + (_prizeImg.height - hitRect.height) * 0.5;
 			addChild(hitRect);

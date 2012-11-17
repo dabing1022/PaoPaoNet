@@ -47,23 +47,25 @@ package
 	import utils.Vector2D;
 	
 	import view.Battery.BatteryManager;
+	import view.Bullet.BulletForTipManager;
 	import view.Bullet.BulletManager;
 	import view.Bullet.BulletView;
 	import view.FireBulletVO;
 	import view.InGameMenu;
-	import view.InfoBoard.FloatScoreManager;
-	import view.InfoBoard.InfoBoardViewManager;
 	import view.Level.LevelContainer;
+	import view.Level.LevelInfoManager;
 	import view.Level.LevelLoadingScreen;
 	import view.Level.LevelUnit;
 	import view.Level.ThemeContainer;
 	import view.Level.ThemeUnit;
 	import view.Level.WaitingNextLevelScreen;
 	import view.LoginScreen;
+	import view.Money.MoneyManager;
 	import view.Prize.PrizeManager;
 	import view.Prize.PrizeView;
 	import view.Recycle.RecycleBarView;
 	import view.Recycle.RecycleManager;
+	import view.Score.ScoreManager;
 	import view.SkillBar.SkillBarManager;
 	
 	public class Main extends Sprite
@@ -232,27 +234,27 @@ package
 				case Command.CHOOSE_LEVEL:
 					onChooseLevel(content);
 					break;
-				case Command.SUPPLY_BULLETS://每打10发后请求服务器，服务器返回10发子弹
-					onSupplyBullets(content);
-					break;
+//				case Command.SUPPLY_BULLETS://每打10发后请求服务器，服务器返回10发子弹
+//					onSupplyBullets(content);
+//					break;
 				case Command.ENTER_GAME:
 					onEnterGame(content);
 					break;
-				case Command.FIRE_BULLET://更新金币点等操作
-					onFreshGameCoin(content);
-					break;
-				case Command.PRIZE_OVER:
-					onPrizeOver(content);
-					break;
-				case Command.BULLET_OVER:
-					onBulletOver(content);
-					break;
-				case Command.LEVEL_OVER:
-					onLevelOver(content);
-					break;
-				case Command.BULLET_EXCHANGE_MONEY:
-					onBulletExchangeMoney(content);
-					break;
+//				case Command.FIRE_BULLET://更新金币点等操作
+//					onFreshGameCoin(content);
+//					break;
+//				case Command.PRIZE_OVER:
+//					onPrizeOver(content);
+//					break;
+//				case Command.BULLET_OVER:
+//					onBulletOver(content);
+//					break;
+//				case Command.LEVEL_OVER:
+//					onLevelOver(content);
+//					break;
+//				case Command.BULLET_EXCHANGE_MONEY:
+//					onBulletExchangeMoney(content);
+//					break;
 			}
 		}
 		
@@ -293,13 +295,15 @@ package
 			bgImg = null;
 			
 			BulletManager.getInstance().end();
+			BulletForTipManager.getInstance().end();
 			BatteryManager.getInstance().end();
 			RecycleManager.getInstance().end();
+			LevelInfoManager.getInstance().end();
 			PrizeManager.getInstance().end();
 			PrizeManager.getInstance().removeEventListener(PrizeEvent.FLY_AWAY, onPrizeFlyAway);
 			SkillBarManager.getInstance().end(stage);
-			FloatScoreManager.getInstance().end();
-			InfoBoardViewManager.getInstance().end();
+			ScoreManager.getInstance().end();
+			MoneyManager.getInstance().end();
 //			SoundManager.getInstance().stopSound("bgm", true);
 			gameTimer.stop();
 			stage.removeEventListener(TouchEvent.TOUCH, onTouch);
@@ -307,8 +311,8 @@ package
 			firingRad = 0;
 			Data.getInstance().bulletVec.splice(0, Data.getInstance().bulletVec.length);
 			
-//			inGameMenu.removeFromParent(true);
-//			inGameMenu = null;
+			inGameMenu.removeFromParent(true);
+			inGameMenu = null;
 		}
 		
 		
@@ -316,7 +320,7 @@ package
 		{
 			var obj:Object = com.adobe.serialization.json.JSON.decode(content);
 			UserData.getInstance().money = obj.money;
-			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+			MoneyManager.getInstance().money = UserData.getInstance().money;
 		}
 		
 		//特殊子弹被打下来
@@ -361,7 +365,8 @@ package
 			//score更新
 			//money更新
 			UserData.getInstance().money = obj.userMoney;
-			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+			MoneyManager.getInstance().money = UserData.getInstance().money;
+			
 			//淡出移除被击落的一般飞行物
 			var len:uint = PrizeManager.getInstance().prizeVec.length;
 			var i:uint;
@@ -419,7 +424,7 @@ package
 		private function onFreshGameCoin(content:String):void{
 			var obj:Object = com.adobe.serialization.json.JSON.decode(content);
 			UserData.getInstance().money = obj.money;
-			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+			MoneyManager.getInstance().money = UserData.getInstance().money;
 		}
 		
 		/**包含了舞台飞行物的信息*/
@@ -440,20 +445,21 @@ package
 			bulletFiredNum = 0;
 			addInGameBg();//加入游戏背景
 //			addInGameMenu();
-			BulletManager.getInstance().start();
-			RecycleManager.getInstance().start();
+//			BulletManager.getInstance().start();
+//			RecycleManager.getInstance().start();
 //			LevelInfoManager.getInstance().start();
-			PrizeManager.getInstance().start();
-			BatteryManager.getInstance().start(Data.getInstance().bulletVec[0]);
-			BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
+//			PrizeManager.getInstance().start();
+			BatteryManager.getInstance().start();
 			BatteryManager.getInstance().addBattery();
-			PrizeManager.getInstance().addEventListener(PrizeEvent.FLY_AWAY, onPrizeFlyAway);
-			SkillBarManager.getInstance().start(stage);
-			FloatScoreManager.getInstance().start();
-			InfoBoardViewManager.getInstance().start();
-			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+//			PrizeManager.getInstance().addEventListener(PrizeEvent.FLY_AWAY, onPrizeFlyAway);
+//			SkillBarManager.getInstance().start(stage);
+//			ScoreManager.getInstance().start();
+//			MoneyManager.getInstance().start();
+//			MoneyManager.getInstance().money = UserData.getInstance().money;
 //			SoundManager.getInstance().playSound("bgm", true, int.MAX_VALUE);
 			
+//			BulletForTipManager.getInstance().start(Data.getInstance().bulletVec[0]);
+//			BulletForTipManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
 			
 			var obj:Object = new Object();
 			obj.username = UserData.getInstance().userName;
@@ -550,10 +556,10 @@ package
 		
 		
 		private function gameLoop(event:TimerEvent):void{
-			checkAndFire();
-			checkRecycleCollision();
-			checkCollision();
-			sendHeartBeat();
+//			checkAndFire();
+//			checkRecycleCollision();
+//			checkCollision();
+//			sendHeartBeat();
 		}
 		
 		private var temp1:int;
@@ -639,10 +645,10 @@ package
 		private function creatBullet():void
 		{
 			bulletFiredNum ++;
-//			SoundManager.getInstance().playSound("shoot", false, 1, 0, 0.5);
+			SoundManager.getInstance().playSound("shoot", false, 1, 0, 0.5);
 			var x1:Number = Const.BATTERY_X + Const.GUN_LEN * Math.cos(firingRad);
 			var y1:Number = Const.BATTERY_Y + Const.GUN_LEN * Math.sin(firingRad);
-			BulletManager.getInstance().addBullets(x1,y1,starlingStage.globalX, starlingStage.globalY, BatteryManager.getInstance().nextBulletData);
+			BulletManager.getInstance().addBullets(x1,y1,starlingStage.globalX, starlingStage.globalY, BulletForTipManager.getInstance().nextBulletData);
 			
 			var fireObj:Object = new Object();
 			fireObj.username = UserData.getInstance().userName;
@@ -663,11 +669,11 @@ package
 			}
 			
 			if(FireBulletVO.fireState == FireBulletVO.SKILLBAR_STATE){
-				SkillBarManager.getInstance().subBullet(BatteryManager.getInstance().nextBulletData);
+				SkillBarManager.getInstance().subBullet(BulletForTipManager.getInstance().nextBulletData);
 			}
 			
-			BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
-			BatteryManager.getInstance().showNextBulletTip();
+			BulletForTipManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
+			BulletForTipManager.getInstance().showNextBulletTip();
 			startReloading();
 		}
 		

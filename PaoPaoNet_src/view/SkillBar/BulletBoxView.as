@@ -19,11 +19,9 @@ package view.SkillBar
 	public class BulletBoxView extends Sprite
 	{
         /**技能框背景*/
-		private var bulletBoxBg:Image;
+		private var bulletBoxBg:Quad;
         /**技能框的长宽*/
 		private static const LEN:uint = 56;
-		private static const H_LEN:uint = 56;
-		private static const V_LEN:uint = 65;
         /**当选中该技能时，技能框上的动画*/
 		private var skillSelectedAni:MovieClip;
         /**技能->特殊子弹的个数*/
@@ -35,17 +33,13 @@ package view.SkillBar
         /**特殊子弹图*/
 		private var _specialBulletImg:Image;
 		public var bulletData:BulletData;
-		private var _keyboardIndex:uint;
-		private var _keyboardIndexImg:Image;
-		public function BulletBoxView(keyIndex:uint)
+		public function BulletBoxView()
 		{
 			super();
 			bulletData = new BulletData();
-			_keyboardIndex = keyIndex;
 			drawBulletBoxBg();
 			drawNumTxt();
-			drawKeyIndexInfo();
-//			drawSkillSelectedAni();
+			drawSkillSelectedAni();
 		}
 		
 		private function drawNumTxt():void
@@ -58,24 +52,7 @@ package view.SkillBar
 			addChild(_numTxt);
 		}
 		
-		private function drawKeyIndexInfo():void{
-			switch(_keyboardIndex){
-				case 1:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key1"));
-					break;
-				case 2:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key2"));
-					break;
-				case 3:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key3"));
-					break;
-			}
-			addChild(_keyboardIndexImg);
-			_keyboardIndexImg.x = 50;
-			_keyboardIndexImg.y = 50;
-		}
-		
-		/*private function drawSkillSelectedAni():void
+		private function drawSkillSelectedAni():void
 		{
 			skillSelectedAni = new MovieClip(Assets.getSkillSelectedAtlas().getTextures("skillAni"), 24);
 			addChild(skillSelectedAni);
@@ -84,11 +61,11 @@ package view.SkillBar
 			Starling.juggler.add(skillSelectedAni);
 			skillSelectedAni.stop();
 			skillSelectedAni.visible = false;
-		}*/
+		}
 		
 		private function drawBulletBoxBg():void
 		{
-			bulletBoxBg = new Image(Assets.getAtlas().getTexture("skillBoxBg"));
+			bulletBoxBg = new Quad(LEN, LEN, 0x0066ff);
 			addChild(bulletBoxBg);
 		}		
 		

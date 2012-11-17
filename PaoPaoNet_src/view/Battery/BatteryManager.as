@@ -1,7 +1,5 @@
 package view.Battery
 {
-	import model.BulletData;
-	
 	import starling.events.EventDispatcher;
 	
 	import utils.LayerUtils;
@@ -10,8 +8,6 @@ package view.Battery
 	{
 		private static var _instance:BatteryManager;
 		private var _battery:BatteryView;
-		/**提示子弹的数据信息*/
-		public var nextBulletData:BulletData;
 		public function BatteryManager()
 		{
 			super();
@@ -21,8 +17,8 @@ package view.Battery
 			return _instance ||= new BatteryManager();
 		}
 
-		public function start(bulletData:BulletData):void{
-			_battery = new BatteryView(bulletData);
+		public function start():void{
+			_battery = new BatteryView();
 		}
 		
 		public function addBattery():void{
@@ -38,11 +34,7 @@ package view.Battery
 		}
 		
 		public function gunRotate(deg:Number):void{
-			_battery.gunSpr.rotation = deg;
-		}
-		
-		public function showNextBulletTip():void{
-			_battery.showNextBulletTip(nextBulletData);
+			_battery.gun.rotation = deg;
 		}
 
 	/*	public function gunBang():void{

@@ -11,7 +11,7 @@ package view.SkillBar
 	import utils.LayerUtils;
 	import utils.LevelConfigXmlUtils;
 	
-	import view.Battery.BatteryManager;
+	import view.Bullet.BulletForTipManager;
 	import view.Bullet.BulletForTipView;
 	import view.FireBulletVO;
 	import view.Prize.PrizeView;
@@ -59,9 +59,9 @@ package view.SkillBar
 					_skillBar.bulletBoxView1.isSelected = !_skillBar.bulletBoxView1.isSelected;
 					FireBulletVO.fireState = !FireBulletVO.fireState;
 					if(FireBulletVO.fireState == FireBulletVO.SYSTEM_STATE){
-						BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
+						BulletForTipManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
 					}else{
-						BatteryManager.getInstance().nextBulletData = _skillBar.bulletBoxView1.bulletData;
+						BulletForTipManager.getInstance().nextBulletData = _skillBar.bulletBoxView1.bulletData;
 					}
 					break;
 				case 50:   //键盘2号键
@@ -74,9 +74,9 @@ package view.SkillBar
 					_skillBar.bulletBoxView2.isSelected = !_skillBar.bulletBoxView2.isSelected;
 					FireBulletVO.fireState = !FireBulletVO.fireState;
 					if(FireBulletVO.fireState == FireBulletVO.SYSTEM_STATE){
-						BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
+						BulletForTipManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
 					}else{
-						BatteryManager.getInstance().nextBulletData = _skillBar.bulletBoxView2.bulletData;
+						BulletForTipManager.getInstance().nextBulletData = _skillBar.bulletBoxView2.bulletData;
 					}
 					break;
 				case 51:   //键盘3号键
@@ -89,13 +89,13 @@ package view.SkillBar
 					_skillBar.bulletBoxView3.isSelected = !_skillBar.bulletBoxView3.isSelected;
 					FireBulletVO.fireState = !FireBulletVO.fireState;
 					if(FireBulletVO.fireState == FireBulletVO.SYSTEM_STATE){
-						BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
+						BulletForTipManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
 					}else{
-						BatteryManager.getInstance().nextBulletData = _skillBar.bulletBoxView3.bulletData;
+						BulletForTipManager.getInstance().nextBulletData = _skillBar.bulletBoxView3.bulletData;
 					}
 					break;
 			}
-			BatteryManager.getInstance().showNextBulletTip();
+			BulletForTipManager.getInstance().showNextBulletTip();
 		}
 		
 		private function disShowSelectedAni(bulletBoxId:uint):void{
@@ -133,6 +133,7 @@ package view.SkillBar
 				}
 			}
 		}
+		
 		
 /*--------------------------------getter and setter----------------------------*/
 		public function get skillBar():SkillBarView

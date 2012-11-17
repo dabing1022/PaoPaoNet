@@ -27,7 +27,6 @@ package view.Recycle
 			LayerUtils.getInstance().frameLayer.addChild(_recycleBarL);
 			_recycleBarL.x = Const.RECYCLE_BAR1_X;
 			_recycleBarL.y = Const.RECYCLE_BAR1_Y;
-			_recycleBarL.numTxt.x = 30;
 			recycleBarVec[0] = _recycleBarL;
 			
 			_recyeleBarR = new RecycleBarView();

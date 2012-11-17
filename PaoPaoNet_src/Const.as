@@ -22,15 +22,15 @@ package{
         public static const BUBBLE_TYPES_NUM:uint = 6;
 
         /**泡泡技能条的坐标*/
-        public static const SKILL_BAR_X:uint = 40;
-        public static const SKILL_BAR_Y:uint = 500;
+        public static const SKILL_BAR_X:uint = 0;
+        public static const SKILL_BAR_Y:uint = 517;
         /**泡泡技能条的3个特殊泡泡的全局舞台坐标,用来TweenMax的运动路径终点*/
-        public static const SKILL_BAR_BUBBLE1_X:uint = 54;
-        public static const SKILL_BAR_BUBBLE1_Y:uint = 510;
-        public static const SKILL_BAR_BUBBLE2_X:uint = 124;
-        public static const SKILL_BAR_BUBBLE2_Y:uint = 510;
-        public static const SKILL_BAR_BUBBLE3_X:uint = 196;
-        public static const SKILL_BAR_BUBBLE3_Y:uint = 510;
+        public static const SKILL_BAR_BUBBLE1_X:uint = 42;
+        public static const SKILL_BAR_BUBBLE1_Y:uint = 529;
+        public static const SKILL_BAR_BUBBLE2_X:uint = 120;
+        public static const SKILL_BAR_BUBBLE2_Y:uint = 529;
+        public static const SKILL_BAR_BUBBLE3_X:uint = 202;
+        public static const SKILL_BAR_BUBBLE3_Y:uint = 529;
 		
 		/**回收盒子坐标*/
 		public static const RECYCLE_BAR1_X:uint = 10;
