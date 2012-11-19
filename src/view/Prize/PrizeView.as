@@ -84,8 +84,8 @@ package view.Prize
 		private function drawEnergonContainer():void
 		{
 			_energonContainer = new Sprite();
-			_energonContainer.x = 40;
-			_energonContainer.y = 110;
+			_energonContainer.x = 20;
+			_energonContainer.y = 80;
 			addChild(_energonContainer);
 			
 			/**
@@ -127,10 +127,10 @@ package view.Prize
 			e = null;
 			//shake
 			if(_energonColorIdVec.length > 0 &&_energonColorIdVec.lastIndexOf(id) == -1){
-//				SoundManager.getInstance().playSound("hurt", false);
+				SoundManager.getInstance().playSound("hurt", false);
 				shake();
 			}else{
-//				SoundManager.getInstance().playSound("dispear", false);
+				SoundManager.getInstance().playSound("dispear", false);
 			}
 		}
 
@@ -220,7 +220,7 @@ package view.Prize
 		
 		private function drawHitRect():void{
 			hitRect = new Quad(50, 50, 0x000000, true);
-			hitRect.alpha = 0.2;
+			hitRect.alpha = 0;
 			hitRect.x = _prizeImg.x + (_prizeImg.width - hitRect.width) * 0.5;
 			hitRect.y = _prizeImg.y + (_prizeImg.height - hitRect.height) * 0.5;
 			addChild(hitRect);

@@ -31,6 +31,7 @@ package
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
@@ -43,6 +44,7 @@ package
 	import utils.CommunicateUtils;
 	import utils.LayerUtils;
 	import utils.LevelConfigXmlUtils;
+	import utils.SocketUtil;
 	import utils.SoundManager;
 	import utils.Vector2D;
 	
@@ -50,7 +52,6 @@ package
 	import view.Bullet.BulletManager;
 	import view.Bullet.BulletView;
 	import view.FireBulletVO;
-	import view.InGameMenu;
 	import view.InfoBoard.FloatScoreManager;
 	import view.InfoBoard.InfoBoardViewManager;
 	import view.Level.LevelContainer;
@@ -95,8 +96,8 @@ package
 		private var bulletFiredNum:uint;
 		private var waitingNextLevelScreen:WaitingNextLevelScreen;//暂时用伪加载画面过度到下一关卡
 		private var gameTimer:Timer;
-		private var inGameMenu:InGameMenu;
 		
+		private var tweenObj:Vector.<DisplayObject>;
 		public function Main()
 		{
 			super();
@@ -124,6 +125,7 @@ package
 			if (socket == null){
 				socket = new Socket();
 				socket.timeout = 40000;			
+				SocketUtil.currentSocket = socket;
 				socket.addEventListener(flash.events.Event.CONNECT, onConnect);
 				socket.addEventListener(flash.events.ProgressEvent.SOCKET_DATA, onSocketData);
 //				socket.addEventListener(flash.events.Event.CLOSE, onClose);
@@ -300,15 +302,18 @@ package
 			SkillBarManager.getInstance().end(stage);
 			FloatScoreManager.getInstance().end();
 			InfoBoardViewManager.getInstance().end();
-//			SoundManager.getInstance().stopSound("bgm", true);
+			SoundManager.getInstance().stopSound("bgm", true);
 			gameTimer.stop();
-			stage.removeEventListener(TouchEvent.TOUCH, onTouch);
 			isFiring = false;
 			firingRad = 0;
 			Data.getInstance().bulletVec.splice(0, Data.getInstance().bulletVec.length);
 			
-//			inGameMenu.removeFromParent(true);
-//			inGameMenu = null;
+			
+			stage.removeEventListener(TouchEvent.TOUCH, onTouch);
+			stage.removeEventListener(UserEvent.MUTE, onMute);
+			stage.removeEventListener(UserEvent.UNMUTE, onUnmute);
+			stage.removeEventListener(UserEvent.CHOOSE_THEME, onInGameChooseTheme);
+			stage.removeEventListener(UserEvent.REPLAY, onInGameReplayLevel);
 		}
 		
 		
@@ -343,15 +348,18 @@ package
 					tween.fadeTo(0);   
 					Starling.juggler.add(tween);
 					tween.onComplete = onFinishTweenBar;
-					tween.onCompleteArgs = [bulletData];
+					tween.onCompleteArgs = [prize,bulletData];
 					PrizeManager.getInstance().prizeVec.splice(i,1);
+					tweenObj.push(prize);
 					break;
 				}
 			}
 		}
 		
-		private function onFinishTweenBar(bulletData:BulletData):void{
+		private function onFinishTweenBar(prize:PrizeView, bulletData:BulletData):void{
+			trace("----------特殊子弹被打中--------------------");
 			SkillBarManager.getInstance().addBullet(bulletData);
+			tweenObj.slice(tweenObj.indexOf(prize), 1);
 		}
 		
 		
@@ -439,10 +447,9 @@ package
 		private function initGame():void{
 			bulletFiredNum = 0;
 			addInGameBg();//加入游戏背景
-//			addInGameMenu();
+			tweenObj = new Vector.<DisplayObject>();
 			BulletManager.getInstance().start();
 			RecycleManager.getInstance().start();
-//			LevelInfoManager.getInstance().start();
 			PrizeManager.getInstance().start();
 			BatteryManager.getInstance().start(Data.getInstance().bulletVec[0]);
 			BatteryManager.getInstance().nextBulletData = Data.getInstance().bulletVec[0];
@@ -452,8 +459,8 @@ package
 			FloatScoreManager.getInstance().start();
 			InfoBoardViewManager.getInstance().start();
 			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
-//			SoundManager.getInstance().playSound("bgm", true, int.MAX_VALUE);
-			
+			InfoBoardViewManager.getInstance().updateLevelInfo(UserData.getInstance().themeId,UserData.getInstance().levelIndex);
+			SoundManager.getInstance().playSound("bgm", true, int.MAX_VALUE);
 			
 			var obj:Object = new Object();
 			obj.username = UserData.getInstance().userName;
@@ -462,6 +469,10 @@ package
 			CommunicateUtils.getInstance().sendMessage(socket, Command.ENTER_GAME, obj);
 			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
+			stage.addEventListener(UserEvent.MUTE, onMute);
+			stage.addEventListener(UserEvent.UNMUTE, onUnmute);
+			stage.addEventListener(UserEvent.CHOOSE_THEME, onInGameChooseTheme);
+			stage.addEventListener(UserEvent.REPLAY, onInGameReplayLevel);
 			if(gameTimer == null){
 				gameTimer = new Timer(1000 / 60);
 				gameTimer.addEventListener(TimerEvent.TIMER, gameLoop);
@@ -469,14 +480,12 @@ package
 			gameTimer.start();
 		}
 		
-		private function addInGameMenu():void
-		{
-			inGameMenu = new InGameMenu();
-			inGameMenu.x = 400;
-			inGameMenu.y = 10;
-			LayerUtils.getInstance().frameLayer.addChild(inGameMenu);
-			inGameMenu.addEventListener(UserEvent.REPLAY, onInGameReplayLevel);
-			inGameMenu.addEventListener(UserEvent.CHOOSE_THEME, onInGameChooseTheme);
+		private function onMute():void{
+			SoundManager.getInstance().muteSound();
+		}
+		
+		private function onUnmute():void{
+			SoundManager.getInstance().muteSound();
 		}
 		
 		private function onInGameChooseTheme(event:UserEvent):void
@@ -639,7 +648,7 @@ package
 		private function creatBullet():void
 		{
 			bulletFiredNum ++;
-//			SoundManager.getInstance().playSound("shoot", false, 1, 0, 0.5);
+			SoundManager.getInstance().playSound("shoot", false, 1, 0, 0.5);
 			var x1:Number = Const.BATTERY_X + Const.GUN_LEN * Math.cos(firingRad);
 			var y1:Number = Const.BATTERY_Y + Const.GUN_LEN * Math.sin(firingRad);
 			BulletManager.getInstance().addBullets(x1,y1,starlingStage.globalX, starlingStage.globalY, BatteryManager.getInstance().nextBulletData);

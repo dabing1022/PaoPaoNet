@@ -14,42 +14,48 @@ package view.InfoBoard
 	import starling.utils.Color;
 	import starling.utils.HAlign;
 	
+	import utils.NumberUtils;
+	
 	public class MoneyView extends Sprite
 	{
 		private var _moneyImg:Image;
 		private var _moneyTxt:TextField;
+		private var _numBg:Image;
+		private var _numSpr:Sprite;
+		public var money:uint;
+		private var _textureVec:Vector.<Texture>;
+		private const WIDTH:uint = 16;
+		private var gap:Number = 0.5;
 		public function MoneyView()
 		{
 			super();
+			_textureVec = new Vector.<Texture>();
 			
 			_moneyImg = new Image(Assets.getAtlas().getTexture("coin"));
 			addChild(_moneyImg);
 			
-			var tempCls:Class = Assets.getClass("Resource1_FloatScoreFontImg");
-			var bmp:Bitmap = new tempCls();
-			var texture:Texture = Texture.fromBitmap(bmp);
-			tempCls = Assets.getClass("Resource1_FloatScoreFontXml");
-			var xml:XML = XML(new tempCls());
-			var bmpFont:BitmapFont = new BitmapFont(texture, xml);
-			TextField.registerBitmapFont(bmpFont,"moneyFont");
+			_numBg = new Image(Assets.getAtlas().getTexture("numBg2"));
+			addChild(_numBg);
+			_numBg.x = 40;
 			
-			_moneyTxt = new TextField(200, 50, "0", "moneyFont");
-			_moneyTxt.fontSize = BitmapFont.NATIVE_SIZE;
-			_moneyTxt.color = Color.WHITE;
-			_moneyTxt.hAlign = HAlign.LEFT;
-			addChild(_moneyTxt);
-			_moneyTxt.x = 65;
+			_numSpr = new Sprite();
+			addChild(_numSpr);
+			_numSpr.x = 50;
+			_numSpr.y = 5;
+		}
+		
+		public function setMoney(value:uint):void{
+			money = value;
+			_textureVec = NumberUtils.getInstance().getNumTextureVec(money);
+			_numSpr.removeChildren(0, -1, true);
+			var len:uint = _textureVec.length;
+			for(var i:uint = 0; i < len; i++){
+				var img:Image = new Image(_textureVec[i]);
+				_numSpr.addChild(img);
+				img.x = (WIDTH + gap) * i;
+			}
 		}
 
-		public function get moneyTxt():TextField
-		{
-			return _moneyTxt;
-		}
-
-		public function set moneyTxt(value:TextField):void
-		{
-			_moneyTxt = value;
-		}
 
 	}
 }

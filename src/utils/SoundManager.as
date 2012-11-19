@@ -30,11 +30,11 @@ package utils{
         }
 
         private function init():void{
-            addSound("bgm",Assets.getSound("Resource1_1_bgm"));
-			addSound("shoot",Assets.getSound("Resource1_1_shoot"));
-			addSound("mute",Assets.getSound("Resource1_1_mute"));
-			addSound("hurt",Assets.getSound("Resource1_1_hurt"));
-			addSound("dispear",Assets.getSound("Resource1_1_dispear"));
+            addSound("bgm",Assets.getSound("Resource1_bgm"));
+			addSound("shoot",Assets.getSound("Resource1_shoot"));
+			addSound("mute",Assets.getSound("Resource1_mute"));
+			addSound("hurt",Assets.getSound("Resource1_hurt"));
+			addSound("dispear",Assets.getSound("Resource1_dispear"));
         }
 
         /**

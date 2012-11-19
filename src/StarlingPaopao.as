@@ -30,8 +30,8 @@ package
 		{
 			expandmenu = new ContextMenu();
 			expandmenu.hideBuiltInItems();
-			customMenu = new ContextMenuItem("视讯科技", true);
-			versionMenu = new ContextMenuItem("版本号:201210111030", true, false);
+			customMenu = new ContextMenuItem("51高清娱乐", true);
+			versionMenu = new ContextMenuItem("版本号:201211171740", true, false);
 			expandmenu.customItems.push(versionMenu);
 			expandmenu.customItems.push(customMenu);
 			this.contextMenu = expandmenu;

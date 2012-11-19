@@ -18,7 +18,7 @@ package view.Bullet
 		{
 			super();
 			_bulletData = bulletData;
-			_bulletName = _bulletData.bulletName + "1";
+			_bulletName = _bulletData.bulletName + "2";
 			drawBulletForTipImg();
 			this.touchable = false;
 		}

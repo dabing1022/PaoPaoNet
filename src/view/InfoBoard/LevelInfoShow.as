@@ -10,34 +10,75 @@ package view.InfoBoard
 	import starling.utils.Color;
 	import starling.utils.HAlign;
 	
+	import utils.NumberUtils;
+	
 	public class LevelInfoShow extends Sprite
 	{
-		private var _levelName:String;
+		private var _themeId:uint;
+		private var _levelId:uint;
 		private var _levelImg:Image;
 		public var levelNameTxt:TextField;
+		private var _numBg:Image;
+		private var _textureVec1:Vector.<Texture>;
+		private var _textureVec2:Vector.<Texture>;
+		private var _themeNumSpr:Sprite;
+		private var _levelNumSpr:Sprite;
+		private var _lineImg:Image;
+		private const WIDTH:uint = 21;
+		private var gap:uint = 1;
 		public function LevelInfoShow(themeId:uint, levelIndex:uint):void
 		{
 			super();
-			_levelName = themeId + "-" + levelIndex;
+			_textureVec1 = new Vector.<Texture>();
+			_textureVec2 = new Vector.<Texture>();
+			
 			_levelImg = new Image(Assets.getAtlas().getTexture("level"));
 			addChild(_levelImg);
 			
-			var tempCls:Class = Assets.getClass("Resource1_FloatScoreFontImg");
-			var bmp:Bitmap = new tempCls();
-			var texture:Texture = Texture.fromBitmap(bmp);
-			tempCls = Assets.getClass("Resource1_FloatScoreFontXml");
-			var xml:XML = XML(new tempCls());
-			var bmpFont:BitmapFont = new BitmapFont(texture, xml);
-			TextField.registerBitmapFont(bmpFont,"levelFont");
+			_numBg = new Image(Assets.getAtlas().getTexture("numBg2"));
+			addChild(_numBg);
+			_numBg.x = 60;
 			
-			levelNameTxt = new TextField(90, 50, _levelName, "levelFont");
-			levelNameTxt.fontSize = BitmapFont.NATIVE_SIZE;
-			levelNameTxt.color = Color.WHITE;
-			levelNameTxt.hAlign = HAlign.LEFT;
-			addChild(levelNameTxt);
-			levelNameTxt.x = 60;
-			levelNameTxt.y = -14;
+			_themeNumSpr = new Sprite();
+			addChild(_themeNumSpr);
+			_themeNumSpr.x = 70;
+			_themeNumSpr.y = 5;
 			
+			_lineImg = new Image(Assets.getAtlas().getTexture("numLine"));
+			addChild(_lineImg);
+			
+			_levelNumSpr = new Sprite();
+			addChild(_levelNumSpr);
 		}
+		
+		public function setLevelName(themeId:uint,levelId:uint):void{
+			_themeId = themeId;
+			_levelId = levelId;
+			_themeNumSpr.removeChildren(0, -1, true);
+			_levelNumSpr.removeChildren(0, -1, true);
+			
+			_textureVec1 = NumberUtils.getInstance().getNumTextureVec(_themeId);
+			var len1:uint = _textureVec1.length;
+			for(var i:uint = 0; i < len1; i++){
+				var img:Image = new Image(_textureVec1[i]);
+				_themeNumSpr.addChild(img);
+				img.x = (WIDTH + gap) * i;
+			}
+			
+			_lineImg.x = _themeNumSpr.x + _themeNumSpr.width + 4;
+			_lineImg.y = 5;
+			
+			_textureVec2 = NumberUtils.getInstance().getNumTextureVec(_levelId);
+			var len2:uint = _textureVec2.length;
+			for(var j:uint = 0; j < len2; j++){
+				var img2:Image = new Image(_textureVec2[j]);
+				_levelNumSpr.addChild(img2);
+				img2.x = (WIDTH + gap) * j;
+			}
+			
+			_levelNumSpr.x = _lineImg.x + _lineImg.width + 4;
+			_levelNumSpr.y = 5;
+		}
+		
 	}
 }

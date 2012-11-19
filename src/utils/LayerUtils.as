@@ -8,9 +8,9 @@
 	 */
 	public class LayerUtils
 	{
-		private var _frameLayer:Sprite;
-		private var _gameLayer:Sprite;
-		private var _baseLayer:Sprite
+		private var _frameLayer:starling.display.Sprite;
+		private var _gameLayer:starling.display.Sprite;
+		private var _baseLayer:starling.display.Sprite
 		private static var _instance:LayerUtils;
 		
 		public static function getInstance():LayerUtils
@@ -19,23 +19,23 @@
 		}
 
 		public function start(stage:Stage):void{
-			_frameLayer = new Sprite();
-			_gameLayer = new Sprite();
-			_baseLayer = new Sprite();
+			_frameLayer = new starling.display.Sprite();
+			_gameLayer = new starling.display.Sprite();
+			_baseLayer = new starling.display.Sprite();
 			stage.addChild(_baseLayer);
 			stage.addChild(_gameLayer);
 			stage.addChild(_frameLayer);
 		}
 		
-		public function get frameLayer():Sprite{
+		public function get frameLayer():starling.display.Sprite{
 			return _frameLayer;
 		}
 		
-		public function get gameLayer():Sprite{
+		public function get gameLayer():starling.display.Sprite{
 			return _gameLayer;
 		}
 		
-		public function get baseLayer():Sprite{
+		public function get baseLayer():starling.display.Sprite{
 			return _baseLayer;
 		}
 	}

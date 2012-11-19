@@ -50,7 +50,7 @@ package view.SkillBar
 		
 		private function drawNumTxt():void
 		{
-			_numTxt = new TextField(LEN, 15, "", "Courier New", 10, 0xffffff, true);
+			_numTxt = new TextField(LEN, 20, "", "Courier New", 10, 0x000000, true);
 			_numTxt.autoScale = true;
 			_numTxt.hAlign = HAlign.RIGHT;
 			_numTxt.x = 0;
@@ -104,8 +104,12 @@ package view.SkillBar
 			if(_num == 0){
 				isEmpty = true;
 				_numTxt.text = "";
-				if(_specialBulletImg && contains(_specialBulletImg))
+				if(_specialBulletImg && contains(_specialBulletImg)){
 					removeChild(_specialBulletImg);
+					_specialBulletImg.dispose();
+					bulletData = null;
+				}
+					
 			}else{
 				isEmpty = false;
 				if(!contains(_specialBulletImg))
@@ -120,9 +124,8 @@ package view.SkillBar
 			}else{
 				_specialBulletImg.texture = value;
 			}
-			_specialBulletImg.scaleX = _specialBulletImg.scaleY = 0.5;
-			_specialBulletImg.x = 4;
-			_specialBulletImg.y = 4;
+			_specialBulletImg.x = -8;
+			_specialBulletImg.y = -10;
 			_isEmpty = false;
 		}
 

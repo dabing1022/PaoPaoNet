@@ -14,8 +14,8 @@ package{
         public static const BAG_POS_X:uint = 614;
         public static const BAG_POS_Y:uint = 510;
         /**炮台的坐标*/
-        public static const BATTERY_X:uint = 410;
-        public static const BATTERY_Y:uint = 555;
+        public static const BATTERY_X:uint = 450;
+        public static const BATTERY_Y:uint = 585;
         /**提示下一个泡泡为何物的提示泡泡的坐标*/
         public static const BUBBLE_FOR_TIP_X:uint = 434;
         public static const BUBBLE_FOR_TIP_Y:uint = 560;
@@ -34,9 +34,9 @@ package{
 		
 		/**回收盒子坐标*/
 		public static const RECYCLE_BAR1_X:uint = 10;
-		public static const RECYCLE_BAR1_Y:uint = 200;
-		public static const RECYCLE_BAR2_X:uint = 880;
-		public static const RECYCLE_BAR2_Y:uint = 200;
+		public static const RECYCLE_BAR1_Y:uint = 150;
+		public static const RECYCLE_BAR2_X:uint = 860;
+		public static const RECYCLE_BAR2_Y:uint = 150;
 
      }
 }

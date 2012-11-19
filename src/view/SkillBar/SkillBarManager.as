@@ -41,6 +41,7 @@ package view.SkillBar
 		
 		public function end(stage:Stage):void{
 			LayerUtils.getInstance().frameLayer.removeChild(_skillBar);
+			clearBulletsInBar();
 			_skillBar.dispose();
 			_skillBar = null;
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDownHandler);
@@ -104,18 +105,20 @@ package view.SkillBar
 		
 		//当飞行的特殊子弹被打下来后，道具栏里对应的数量加1
 		public function addBullet(bulletData:BulletData):void{
-			for(var i:uint = 0;i < 3; i++){
-				if(_skillBar.boxVec[i].bulletData.bulletId == bulletData.bulletId){
-					_skillBar.boxVec[i].num ++;
-					break;
-				}
-				if(_skillBar.boxVec[i].isEmpty){
-					_skillBar.boxVec[i].specialBulletImg = Assets.getAtlas().getTexture(bulletData.bulletName + "1");
-					_skillBar.boxVec[i].bulletData = bulletData;
-					_skillBar.boxVec[i].num ++;
-					break;
-				}else{
-					continue;
+			if(_skillBar){ //如果打下来刚好切换关卡，_skillBar被置为null，不用添加子弹
+				for(var i:uint = 0;i < 3; i++){
+					if(_skillBar.boxVec[i].bulletData.bulletId == bulletData.bulletId){
+						_skillBar.boxVec[i].num ++;
+						break;
+					}
+					if(_skillBar.boxVec[i].isEmpty){
+						_skillBar.boxVec[i].specialBulletImg = Assets.getAtlas().getTexture(bulletData.bulletName + "1");
+						_skillBar.boxVec[i].bulletData = bulletData;
+						_skillBar.boxVec[i].num ++;
+						break;
+					}else{
+						continue;
+					}
 				}
 			}
 		}
@@ -130,6 +133,14 @@ package view.SkillBar
 					}
 					FireBulletVO.fireState = FireBulletVO.SYSTEM_STATE;
 					break;
+				}
+			}
+		}
+		
+		private function clearBulletsInBar():void{
+			for(var i:uint = 0;i < 3;i++){
+				if(!_skillBar.boxVec[i].isEmpty){
+					_skillBar.boxVec[i].num = 0;
 				}
 			}
 		}

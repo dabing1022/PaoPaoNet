@@ -40,8 +40,8 @@ package view.Bullet
 			
 			_bullet = new Image(Assets.getAtlas().getTexture(_bulletName));
 			addChild(_bullet);
-			_bullet.pivotX = _bullet.width >> 1;
-			_bullet.pivotY = _bullet.height >> 1;
+			_bullet.pivotX = _bullet.width * 0.5;
+			_bullet.pivotY = _bullet.height * 0.5;
 			
 			this.touchable = false;
         }

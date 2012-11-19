@@ -35,6 +35,8 @@ package view.Battery
 			drawBattery();
 			drawBulletForTip();
             this.touchable = false;
+			this.pivotX = _base.width * 0.5;
+			this.pivotY = _base.height;
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);	
 		}
 		
@@ -51,11 +53,13 @@ package view.Battery
 			
 			var colorName:String = "color" + _bulletData.bulletId;
 			_bulletForTipColorImg = new Image(Assets.getAtlas().getTexture(colorName));
+			_bulletForTipColorImg.pivotX = _bulletForTipColorImg.width * 0.5;
+			_bulletForTipColorImg.pivotY = _bulletForTipColorImg.height * 0.5;
 			
 			gunSpr.addChild(gun);
 			gunSpr.addChild(_bulletForTipColorImg);
-			_bulletForTipColorImg.x = 82;
-			_bulletForTipColorImg.y = 28;
+			_bulletForTipColorImg.x = 90;
+			_bulletForTipColorImg.y = 36;
 			gunSpr.pivotX = 0;
 			gunSpr.pivotY = 38;
 			gunSpr.x = 40;
@@ -67,9 +71,10 @@ package view.Battery
 		private function drawBulletForTip():void
 		{
 			bulletForTipView = new BulletForTipView(_bulletData);
-			bulletForTipView.x = 40;
-			bulletForTipView.y = 20;
-			addChild(bulletForTipView);
+			bulletForTipView.rotation = Math.PI / 2;
+			bulletForTipView.x = 30;
+			bulletForTipView.y = 38;
+			gunSpr.addChild(bulletForTipView);
 		}
 		
 		public function showNextBulletTip(nextBulletData:BulletData):void{
