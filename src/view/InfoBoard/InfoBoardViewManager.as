@@ -47,6 +47,7 @@ package view.InfoBoard
 			if(_inGameSystemPanel && _inGameSystemPanel.parent){
 				_inGameSystemPanel.removeFromParent(true);
 				_inGameSystemPanel = null;
+				_systemPanelStatus = "null";
 			}
 		}
 		

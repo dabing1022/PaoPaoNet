@@ -161,7 +161,7 @@ package
 			isTryingConnect = true;
 			reconnect = false;
 			
-			clearGameRes();
+//			clearGameRes();
 			reconnectTimer = new Timer(1000);
 			reconnectTimer.addEventListener(TimerEvent.TIMER,tryReconnectTimer);
 			reconnectTimer.start();
