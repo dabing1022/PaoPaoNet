@@ -3,6 +3,7 @@ package view.Bullet
 	import flash.display.Bitmap;
 	
 	import model.BulletData;
+	import model.UserData;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -38,7 +39,7 @@ package view.Bullet
 			_position = new Vector2D();
 			_velocity = new Vector2D();
 			
-			_bullet = new Image(Assets.getAtlas().getTexture(_bulletName));
+			_bullet = new Image(Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(_bulletName));
 			addChild(_bullet);
 			_bullet.pivotX = _bullet.width * 0.5;
 			_bullet.pivotY = _bullet.height * 0.5;
@@ -54,6 +55,7 @@ package view.Bullet
 		
 		public function destroy():void{
 			_bullet.removeFromParent(true);
+			_bullet = null;
 		}
 		
 		public function get position():Vector2D

@@ -28,11 +28,11 @@ package view.InfoBoard
 			super();
 			_textureVec = new Vector.<Texture>();
 			
-			_scoreImg = new Image(Assets.getAtlas().getTexture("score"));
+			_scoreImg = new Image(Assets.getPublicAtlas().getTexture("score"));
 			addChild(_scoreImg);
 			_scoreImg.y = 4;
 			
-			_scoreBg = new Image(Assets.getAtlas().getTexture("numBg2"));
+			_scoreBg = new Image(Assets.getPublicAtlas().getTexture("numBg2"));
 			addChild(_scoreBg);
 			_scoreBg.x = 80;
 			

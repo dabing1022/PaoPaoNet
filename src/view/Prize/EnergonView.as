@@ -22,28 +22,28 @@ package view.Prize
 			switch(_colorId)
 			{
 				case 1:
-					texture = Assets.getAtlas().getTexture("color1");
+					texture = Assets.getPublicAtlas().getTexture("color1");
 					break;
 				case 2:
-					texture = Assets.getAtlas().getTexture("color2");
+					texture = Assets.getPublicAtlas().getTexture("color2");
 					break;
 				case 3:
-					texture = Assets.getAtlas().getTexture("color3");
+					texture = Assets.getPublicAtlas().getTexture("color3");
 					break;
 				case 4:
-					texture = Assets.getAtlas().getTexture("color4");
+					texture = Assets.getPublicAtlas().getTexture("color4");
 					break;
 				case 5:
-					texture = Assets.getAtlas().getTexture("color5");
+					texture = Assets.getPublicAtlas().getTexture("color5");
 					break;
 				case 6:
-					texture = Assets.getAtlas().getTexture("color6");
+					texture = Assets.getPublicAtlas().getTexture("color6");
 					break;
 				case 7:
-					texture = Assets.getAtlas().getTexture("color7");
+					texture = Assets.getPublicAtlas().getTexture("color7");
 					break;
 				case 8:
-					texture = Assets.getAtlas().getTexture("color8");
+					texture = Assets.getPublicAtlas().getTexture("color8");
 					break;
 			}
 			img = new Image(texture);

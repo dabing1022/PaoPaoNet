@@ -4,6 +4,10 @@ package events
 	
 	public class UserEvent extends Event
 	{
+		/**登录*/
+		public static const LOGIN:String = "login";
+		/**注册*/
+		public static const REGIST:String = "regist";
 		public static const MONEY_CHANGE:String = "money_change";
 		public static const SYSTEM_SET:String = "system_set";
 		public static const MUTE:String = "muteMusic";

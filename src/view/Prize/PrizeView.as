@@ -5,6 +5,7 @@ package view.Prize
 	import flash.utils.Timer;
 	
 	import model.PrizeData;
+	import model.UserData;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -73,7 +74,7 @@ package view.Prize
 				_type = "prize";
 			}
 			//add prizeImg
-			_prizeImg = new Image(Assets.getAtlas().getTexture(prizeData.prizeName));
+			_prizeImg = new Image(Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(prizeData.prizeName));
 			addChild(_prizeImg);
 			
 			drawEnergonContainer();
@@ -151,7 +152,7 @@ package view.Prize
         }
 
         public function shake():void{
-			ShakeObjUtils.getInstance().shakeObj(this, 1, 60, deg2rad(20));
+			ShakeObjUtils.getInstance().shakeObj(this, 1, 100, deg2rad(20));
         }
 		/**
 		 * 当飞行物为特殊子弹被打下来的时候，进入技能栏

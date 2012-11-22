@@ -8,6 +8,9 @@ package view.Level
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
+	/**
+	 * 关卡容器
+	 */
 	public class LevelContainer extends Sprite
 	{
 		private var _theme:ThemeData;
@@ -45,7 +48,7 @@ package view.Level
 			for(i = 0;i < len;i++){
 				//背景及定位
 				var levelUnit:LevelUnit = new LevelUnit(_levelArr[i].themeId, _levelArr[i].levelIndex);
-				levelUnit.x = 60 * i;
+				levelUnit.x = 120 * i;
 				addChild(levelUnit);
 				_levelVector.push(levelUnit);
 				levelUnit.primaryKey = _levelArr[i].levelId;
@@ -55,13 +58,9 @@ package view.Level
 		
 		private function drawBackBtn():void
 		{
-			backThemeBtn = new Button(Assets.getAtlas().getTexture("loginBtnBg"), "返回");
-			with(backThemeBtn){
-				fontSize = 14;
-				fontColor = 0x000000;
-				x = 100;
-				y = 60;
-			}
+			backThemeBtn = new Button(Assets.getPublicAtlas().getTexture("backBtnNomal"), "",Assets.getPublicAtlas().getTexture("backBtnDown"));
+			backThemeBtn.x = this.width - backThemeBtn.width >> 1;
+			backThemeBtn.y = (this.height - backThemeBtn.height >> 1) + 150;
 			addChild(backThemeBtn);
 		}
 		

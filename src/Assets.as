@@ -12,19 +12,28 @@ package
 	public class Assets
 	{
 		private static var gameTextures:Dictionary = new Dictionary();
-		private static var gameTextureAtlas:TextureAtlas;
-		private static var wingTextureAtlas:TextureAtlas;
 		private static var skillSelectedAtlas:TextureAtlas;
 		private static var tempCls:Class;
-		
-		public static function getAtlas():TextureAtlas{
-			if(gameTextureAtlas == null){
-				var gameTexture:Texture = getTexture("Resource1_AtlasTextureImg");
-				tempCls = getClass("Resource1_AtlasTextureXml");
+		private static var publicGameTextureAtlas:TextureAtlas;
+		private static var themeGameTextureAtlas:TextureAtlas;
+		public static function getPublicAtlas():TextureAtlas{
+			if(publicGameTextureAtlas == null){
+				var gameTexture:Texture = getTexture("PublicResource_AtlasTextureImg");
+				tempCls = getClass("PublicResource_AtlasTextureXml");
 				var xml:XML = XML(new tempCls());
-				gameTextureAtlas = new TextureAtlas(gameTexture,xml);
+				publicGameTextureAtlas = new TextureAtlas(gameTexture,xml);
 			}
-			return gameTextureAtlas;
+			return publicGameTextureAtlas;
+		}
+		
+		public static function getThemeAtlas(themeId:uint):TextureAtlas{
+			if(themeGameTextureAtlas == null){
+				var gameTexture:Texture = getTexture("Theme" + themeId + "Resource" + "_AtlasTextureImg");
+				tempCls = getClass("Theme" + themeId + "Resource" + "_AtlasTextureXml");
+				var xml:XML = XML(new tempCls());
+				themeGameTextureAtlas = new TextureAtlas(gameTexture,xml);
+			}
+			return themeGameTextureAtlas;
 		}
 		
 		public static function getSkillSelectedAtlas():TextureAtlas{

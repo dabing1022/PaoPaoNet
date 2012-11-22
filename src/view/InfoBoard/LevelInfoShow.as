@@ -32,10 +32,10 @@ package view.InfoBoard
 			_textureVec1 = new Vector.<Texture>();
 			_textureVec2 = new Vector.<Texture>();
 			
-			_levelImg = new Image(Assets.getAtlas().getTexture("level"));
+			_levelImg = new Image(Assets.getPublicAtlas().getTexture("level"));
 			addChild(_levelImg);
 			
-			_numBg = new Image(Assets.getAtlas().getTexture("numBg2"));
+			_numBg = new Image(Assets.getPublicAtlas().getTexture("numBg2"));
 			addChild(_numBg);
 			_numBg.x = 60;
 			
@@ -44,7 +44,7 @@ package view.InfoBoard
 			_themeNumSpr.x = 70;
 			_themeNumSpr.y = 5;
 			
-			_lineImg = new Image(Assets.getAtlas().getTexture("numLine"));
+			_lineImg = new Image(Assets.getPublicAtlas().getTexture("numLine"));
 			addChild(_lineImg);
 			
 			_levelNumSpr = new Sprite();

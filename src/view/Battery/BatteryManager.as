@@ -45,12 +45,12 @@ package view.Battery
 			_battery.showNextBulletTip(nextBulletData);
 		}
 
-	/*	public function gunBang():void{
+		public function gunBang():void{
 			_battery.gunBang();
-		}*/
+		}
 		
-	/*	public function stopFire():void{
+		public function stopFire():void{
 			_battery.stopFire();
-		}*/
+		}
 	}
 }

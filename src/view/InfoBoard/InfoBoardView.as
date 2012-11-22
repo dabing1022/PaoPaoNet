@@ -29,7 +29,7 @@ package view.InfoBoard
 		}
 		
 		private function onAddedToStage(e:Event):void{
-			_infoBarBg = new Image(Assets.getTexture("Resource1_InfoBarBg"));
+			_infoBarBg = new Image(Assets.getPublicAtlas().getTexture("infoBar"));
 			addChild(_infoBarBg);
 			
 			levelInfo = new LevelInfoShow(user.themeId, user.levelIndex);
@@ -46,7 +46,7 @@ package view.InfoBoard
 			scoreView.y = 8;
 			addChild(scoreView);
 			
-			menuBtn = new Button(Assets.getAtlas().getTexture("menuInGameNomal"), "", Assets.getAtlas().getTexture("menuInGameDown"));
+			menuBtn = new Button(Assets.getPublicAtlas().getTexture("menuInGameNomal"), "", Assets.getPublicAtlas().getTexture("menuInGameDown"));
 			addChild(menuBtn);
 			menuBtn.x = 800;
 			menuBtn.y = 8;

@@ -31,13 +31,14 @@ package
 			expandmenu = new ContextMenu();
 			expandmenu.hideBuiltInItems();
 			customMenu = new ContextMenuItem("51高清娱乐", true);
-			versionMenu = new ContextMenuItem("版本号:201211171740", true, false);
+			versionMenu = new ContextMenuItem("版本号:201211221240", true, false);
 			expandmenu.customItems.push(versionMenu);
 			expandmenu.customItems.push(customMenu);
 			this.contextMenu = expandmenu;
 		}
 		
 		private function initStarling():void{
+			Starling.handleLostContext = true;
 			mStarling = new Starling(Main,stage);
 			mStarling.antiAliasing = 1;
 			mStarling.showStats = true;

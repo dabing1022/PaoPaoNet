@@ -22,10 +22,10 @@ package view.InfoBoard
 		public function FloatScoreView()
 		{
 			super();
-			var tempCls:Class = Assets.getClass("Resource1_FloatScoreFontImg");
+			var tempCls:Class = Assets.getClass("PublicResource_FloatScoreFontImg");
 			var bmp:Bitmap = new tempCls();
 			var texture:Texture = Texture.fromBitmap(bmp);
-			tempCls = Assets.getClass("Resource1_FloatScoreFontXml");
+			tempCls = Assets.getClass("PublicResource_FloatScoreFontXml");
 			var xml:XML = XML(new tempCls());
 			var bmpFont:BitmapFont = new BitmapFont(texture, xml);
 			TextField.registerBitmapFont(bmpFont,"scoreFont");

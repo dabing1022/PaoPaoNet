@@ -26,26 +26,26 @@ package view.InfoBoard
 		}
 		
 		private function onAddedToStage(e:Event):void{
-			bg = new Image(Assets.getAtlas().getTexture("menuPopOutPanelBg"));
+			bg = new Image(Assets.getPublicAtlas().getTexture("menuPopOutPanelBg"));
 			addChild(bg);
 			
-			_muteBtn = new Button(Assets.getAtlas().getTexture("musicOffBtn"));
+			_muteBtn = new Button(Assets.getPublicAtlas().getTexture("musicOffBtn"));
 			addChild(_muteBtn);
 			_muteBtn.x = 10;
 			_muteBtn.y = 21;
 			
-			_unmuteBtn = new Button(Assets.getAtlas().getTexture("musicOnBtn"));
+			_unmuteBtn = new Button(Assets.getPublicAtlas().getTexture("musicOnBtn"));
 			addChild(_unmuteBtn);
 			_unmuteBtn.x = 10;
 			_unmuteBtn.y = 22;
 			_unmuteBtn.visible = false;
 			
-			_chooseLevelBtn = new Button(Assets.getAtlas().getTexture("chooseLevelBtn"));
+			_chooseLevelBtn = new Button(Assets.getPublicAtlas().getTexture("chooseLevelBtn"));
 			addChild(_chooseLevelBtn);
 			_chooseLevelBtn.x = 78;
 			_chooseLevelBtn.y = 22;
 			
-			_replayBtn = new Button(Assets.getAtlas().getTexture("replayBtn"));
+			_replayBtn = new Button(Assets.getPublicAtlas().getTexture("replayBtn"));
 			addChild(_replayBtn);
 			_replayBtn.x = 136;
 			_replayBtn.y = 17;

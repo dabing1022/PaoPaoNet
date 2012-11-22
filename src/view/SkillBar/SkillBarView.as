@@ -24,7 +24,7 @@ package view.SkillBar
 		private function init():void{
 			_boxVec = new Vector.<BulletBoxView>();
 			
-			_skillBarBg = new Image(Assets.getAtlas().getTexture("skillBg"));
+			_skillBarBg = new Image(Assets.getPublicAtlas().getTexture("skillBg"));
 			addChild(_skillBarBg);
 			
 			_bulletBoxView1 = new BulletBoxView(1);

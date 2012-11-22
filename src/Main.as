@@ -3,7 +3,6 @@ package
 	import com.adobe.serialization.json.JSON;
 	
 	import events.LevelChooseEvent;
-	import events.LoginEvent;
 	import events.PrizeEvent;
 	import events.UserEvent;
 	
@@ -60,12 +59,12 @@ package
 	import view.Level.ThemeContainer;
 	import view.Level.ThemeUnit;
 	import view.Level.WaitingNextLevelScreen;
-	import view.LoginScreen;
 	import view.Prize.PrizeManager;
 	import view.Prize.PrizeView;
 	import view.Recycle.RecycleBarView;
 	import view.Recycle.RecycleManager;
 	import view.SkillBar.SkillBarManager;
+	import view.login.LoginScreen;
 	
 	public class Main extends Sprite
 	{
@@ -81,6 +80,7 @@ package
 		//心跳
 		private var heartBeat:int = getTimer();
 		private var preload:PreloadScreen;
+		/**登录界面*/
 		private var loginScreen:LoginScreen;
 		private var starlingStage:Touch;
 		/**游戏中关卡背景图*/
@@ -96,8 +96,6 @@ package
 		private var bulletFiredNum:uint;
 		private var waitingNextLevelScreen:WaitingNextLevelScreen;//暂时用伪加载画面过度到下一关卡
 		private var gameTimer:Timer;
-		
-		private var tweenObj:Vector.<DisplayObject>;
 		public function Main()
 		{
 			super();
@@ -290,8 +288,7 @@ package
 		}
 		
 		private function clearGameRes():void{
-			LayerUtils.getInstance().baseLayer.removeChild(bgImg);//加入游戏背景
-			bgImg.dispose();
+			bgImg.removeFromParent(true);
 			bgImg = null;
 			
 			BulletManager.getInstance().end();
@@ -307,7 +304,6 @@ package
 			isFiring = false;
 			firingRad = 0;
 			Data.getInstance().bulletVec.splice(0, Data.getInstance().bulletVec.length);
-			
 			
 			stage.removeEventListener(TouchEvent.TOUCH, onTouch);
 			stage.removeEventListener(UserEvent.MUTE, onMute);
@@ -334,12 +330,14 @@ package
 			bulletData.speed = obj.speed;
 			bulletData.price = obj.price;
 			
+			if(!PrizeManager.getInstance())	return;//防止出现收到Bullt-over命令和Level—over命令引起的PrizeManager为空
 			//被击落的特殊子弹将放到技能栏里面
 			var len:uint = PrizeManager.getInstance().prizeVec.length;
 			var i:uint;
 			for(i = 0; i < len; i++){
 				if(PrizeManager.getInstance().prizeVec[i].prizeData.primaryKey == obj.prizeId){
 					var prize:PrizeView = PrizeManager.getInstance().prizeVec[i];
+					trace("&&&&&&&&&&&&&&&&Main 342-----------------" + prize);
 					var des:Vector2D = prize.getEndCoord(bulletData.bulletId);
 					var tween:Tween = new Tween(prize, 1.0, Transitions.EASE_OUT);
 					tween.animate("x", des.x);
@@ -350,7 +348,6 @@ package
 					tween.onComplete = onFinishTweenBar;
 					tween.onCompleteArgs = [prize,bulletData];
 					PrizeManager.getInstance().prizeVec.splice(i,1);
-					tweenObj.push(prize);
 					break;
 				}
 			}
@@ -358,8 +355,8 @@ package
 		
 		private function onFinishTweenBar(prize:PrizeView, bulletData:BulletData):void{
 			trace("----------特殊子弹被打中--------------------");
+			if(!SkillBarManager.getInstance())	return;
 			SkillBarManager.getInstance().addBullet(bulletData);
-			tweenObj.slice(tweenObj.indexOf(prize), 1);
 		}
 		
 		
@@ -388,12 +385,16 @@ package
 			var obj:Object = com.adobe.serialization.json.JSON.decode(content);
 			
 			themeContainer.visible = false;
-			levelContainer = new LevelContainer(obj as Array);
-			addChild(levelContainer);
-			levelContainer.x = 260;
-			levelContainer.y = 240;
-			levelContainer.addEventListener(LevelChooseEvent.BACK_TO_THEME, onBackToTheme);
-			levelContainer.addEventListener(LevelChooseEvent.LEVEL_CHOOSE, onLevelChoose);
+			if(levelContainer == null){
+				levelContainer = new LevelContainer(obj as Array);
+				levelContainer.x = 200;
+				levelContainer.y = 100;
+				LayerUtils.getInstance().gameLayer.addChild(levelContainer);
+			}
+			if(!levelContainer.hasEventListener(LevelChooseEvent.BACK_TO_THEME))
+				levelContainer.addEventListener(LevelChooseEvent.BACK_TO_THEME, onBackToTheme);
+			if(!levelContainer.hasEventListener(LevelChooseEvent.LEVEL_CHOOSE))
+				levelContainer.addEventListener(LevelChooseEvent.LEVEL_CHOOSE, onLevelChoose);
 		}
 		
 		/**选择关卡*/
@@ -415,9 +416,20 @@ package
 			var arr:Array = obj as Array;
 			Data.getInstance().initBulletVec(arr);
 			
-			if(levelContainer && levelContainer.parent)
+			if(themeLevelBg && themeLevelBg.parent){
+				themeLevelBg.removeFromParent(true);
+				themeLevelBg = null;
+			}
+			if(themeContainer && themeContainer.parent){
+				themeContainer.removeFromParent(true);
+				themeContainer = null;
+			}
+			if(levelContainer && levelContainer.parent){
 				levelContainer.removeFromParent(true);
-			if(UserData.getInstance().levelIndex == 1){
+				levelContainer = null;
+			}
+			
+			if(!ApplicationDomain.currentDomain.hasDefinition("Theme" + UserData.getInstance().themeId + "Resource_bg")){
 				loadingLevel(UserData.getInstance().themeId, UserData.getInstance().levelIndex);//真实加载
 			}else{
 				addWaiingNextLevelScreen(UserData.getInstance().themeId, UserData.getInstance().levelIndex)//伪读条用于过渡
@@ -447,7 +459,6 @@ package
 		private function initGame():void{
 			bulletFiredNum = 0;
 			addInGameBg();//加入游戏背景
-			tweenObj = new Vector.<DisplayObject>();
 			BulletManager.getInstance().start();
 			RecycleManager.getInstance().start();
 			PrizeManager.getInstance().start();
@@ -529,16 +540,20 @@ package
 			Data.getInstance().bulletVec = Data.getInstance().bulletVec.concat(newAddBulletVec);
 		}
 		
+		private var levelLoadingScreen:LevelLoadingScreen;
 		private function loadingLevel(themeId:uint, levelIndex:uint):void{
-			var levelLoadingScreen:LevelLoadingScreen = new LevelLoadingScreen(themeId, levelIndex);
-			addChild(levelLoadingScreen);
-			levelLoadingScreen.addEventListener(starling.events.Event.COMPLETE, onLevelLoadingComplete);
+			if(levelLoadingScreen == null){
+				levelLoadingScreen = new LevelLoadingScreen(themeId, levelIndex);
+				LayerUtils.getInstance().frameLayer.addChild(levelLoadingScreen);
+				levelLoadingScreen.addEventListener(starling.events.Event.COMPLETE, onLevelLoadingComplete);
+			}
 		}
 		
 		private function onLevelLoadingComplete(event:starling.events.Event):void
 		{
-			event.currentTarget.removeEventListener(starling.events.Event.COMPLETE, onLevelLoadingComplete);
-			(event.currentTarget as Sprite).removeFromParent(true);
+			levelLoadingScreen.removeEventListener(starling.events.Event.COMPLETE, onLevelLoadingComplete);
+			levelLoadingScreen.removeFromParent(true);
+			levelLoadingScreen = null;
 			initGame();
 		}
 		
@@ -552,7 +567,7 @@ package
 		
 		private function addInGameBg():void{
 			//同一个主题的关卡使用相同的背景
-			var bgName:String = "Resource" + UserData.getInstance().themeId + "_" + "bg";
+			var bgName:String = "Theme" + UserData.getInstance().themeId + "Resource" + "_bg";
 			bgImg = new Image(Assets.getTexture(bgName));
 			LayerUtils.getInstance().baseLayer.addChild(bgImg);
 		}
@@ -605,12 +620,12 @@ package
 		private function checkAndFire():void{
 			if(Data.getInstance().bulletVec){
 				if(reloadComplete && isFiring){
-//					BatteryManager.getInstance().gunBang();
+					BatteryManager.getInstance().gunBang();
 					creatBullet();
 				}
-//				if(!isFiring){
-//					BatteryManager.getInstance().stopFire();
-//				}
+				if(!isFiring){
+					BatteryManager.getInstance().stopFire();
+				}
 			}
 		}
 		
@@ -739,20 +754,26 @@ package
 			CommunicateUtils.getInstance().sendMessage(socket, Command.CONNECT, objConnect);
 		}
 		
-		/**主题容器*/
 		private var themeContainer:ThemeContainer;
-		/**关卡容器*/
 		private var levelContainer:LevelContainer;
+		private var themeLevelBg:Image;
 		private function onInitChooseTheme(content:String):void
 		{
-			if(loginScreen && loginScreen.parent)
+			if(loginScreen && loginScreen.parent){
 				loginScreen.removeFromParent(true);
+				loginScreen = null;
+			}
 			
 			var obj:Object = com.adobe.serialization.json.JSON.decode(content);
 			
+			if(themeLevelBg == null){
+				themeLevelBg = new Image(Assets.getTexture("PublicResource_loginBg"));
+				LayerUtils.getInstance().baseLayer.addChild(themeLevelBg);
+			}
+			
 			if(themeContainer == null){
 				themeContainer = new ThemeContainer(obj as Array);
-				addChild(themeContainer);
+				LayerUtils.getInstance().gameLayer.addChild(themeContainer);
 				themeContainer.x = 200;
 				themeContainer.y = 100;
 				themeContainer.addEventListener(LevelChooseEvent.THEME_CHOOSE, onThemeChoose);
@@ -772,7 +793,8 @@ package
 		
 		private function onBackToTheme(event:LevelChooseEvent):void
 		{
-			levelContainer.visible = false;
+			levelContainer.removeFromParent(true);
+			levelContainer = null;
 			themeContainer.visible = true;
 		}
 		
@@ -783,15 +805,15 @@ package
 			
 			loginScreen = new LoginScreen();
 			addChild(loginScreen);
-			loginScreen.addEventListener(LoginEvent.LOGIN, onLogin);
+			loginScreen.addEventListener(UserEvent.LOGIN, onLogin);
 		}
 		
-		private function onLogin(e:LoginEvent):void
+		private function onLogin(e:UserEvent):void
 		{
-			var obj:Object = new Object();
-			obj.username = LoginData.getInstance().username;
-			obj.password = LoginData.getInstance().password;
-			CommunicateUtils.getInstance().sendMessage(socket, Command.LOGIN, obj);
+			var loginData:Object = {};
+			loginData.username = LoginData.getInstance().username;
+			loginData.password = LoginData.getInstance().password;
+			CommunicateUtils.getInstance().sendMessage(socket, Command.LOGIN, loginData);
 		}
 	}
 }

@@ -31,10 +31,10 @@ package view.InfoBoard
 			super();
 			_textureVec = new Vector.<Texture>();
 			
-			_moneyImg = new Image(Assets.getAtlas().getTexture("coin"));
+			_moneyImg = new Image(Assets.getPublicAtlas().getTexture("coin"));
 			addChild(_moneyImg);
 			
-			_numBg = new Image(Assets.getAtlas().getTexture("numBg2"));
+			_numBg = new Image(Assets.getPublicAtlas().getTexture("numBg2"));
 			addChild(_numBg);
 			_numBg.x = 40;
 			

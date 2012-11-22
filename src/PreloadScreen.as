@@ -25,7 +25,7 @@ package
 		private var frameBmpd:BitmapData;
 		private var frameLine:Shape;
 		private var squareQuad:Quad;
-		private static const RES_URL:String = "Resource1.swf";
+		private static const RES_URL:String = "PublicResource.swf";
 		private var loader:Loader;
 		private var loaderContext:LoaderContext;
 		private var percentTxt:TextField;
@@ -82,7 +82,7 @@ package
 		}
 		
 		private function onComplete(e:flash.events.Event):void{
-			trace("load complete...");
+			trace("load public resource complete...");
 			loader.contentLoaderInfo.removeEventListener(flash.events.ProgressEvent.PROGRESS, onProgress);
 			loader.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, onComplete);
 			dispatchEventWith(starling.events.Event.COMPLETE);

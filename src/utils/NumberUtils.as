@@ -17,7 +17,7 @@ package utils
 		private function init():void{
 			var i:uint;
 			for(i = 0; i < 10; i++){
-				var texture:Texture = Assets.getAtlas().getTexture("num" + i);
+				var texture:Texture = Assets.getPublicAtlas().getTexture("num" + i);
 				numberMap.push(texture);
 			}
 		}

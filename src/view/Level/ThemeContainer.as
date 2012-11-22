@@ -2,6 +2,9 @@ package view.Level
 {
 	import starling.display.Sprite;
 	
+	/**
+	 * 主题容器 
+	 **/
 	public class ThemeContainer extends Sprite
 	{
 		private var _themeVector:Vector.<ThemeUnit>;
@@ -23,7 +26,7 @@ package view.Level
 				var themeUnit:ThemeUnit = new ThemeUnit(_themeArr[i].id);
 				addChild(themeUnit);
 				_themeVector.push(themeUnit);
-				themeUnit.x = 100 * i;
+				themeUnit.x = 120 * i;
 				themeUnit.setCanPlayOrNot(!_themeArr[i].locked);//locked == false,则 canPlay == true
 			}
 		}

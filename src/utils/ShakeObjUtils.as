@@ -18,6 +18,7 @@ package utils
 		private var dir:int = 1;   //用于反转方向
 		
 		private static var _instance:ShakeObjUtils;
+		private var isAnimation:Boolean = false;
 		public static function getInstance():ShakeObjUtils{
 			return _instance ||= new ShakeObjUtils();
 		}
@@ -38,6 +39,7 @@ package utils
 		
 		private function shaking(e:TimerEvent):void 
 		{
+			if(isAnimation)	return;
 			var tween:Tween = new Tween(_target, 1.0);
 			Starling.juggler.add(tween);
 			var desRad:Number = _startRad + Math.random() * _maxRotateRad * dir;
@@ -47,6 +49,7 @@ package utils
 		
 		private function shakeComplete(e:TimerEvent):void 
 		{
+			if(isAnimation) return;
 			var tween:Tween = new Tween(_target, 1.0);
 			Starling.juggler.add(tween);
 			tween.animate("rotation", _startRad);

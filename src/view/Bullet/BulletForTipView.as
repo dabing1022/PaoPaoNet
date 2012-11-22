@@ -1,6 +1,7 @@
 package view.Bullet
 {
 	import model.BulletData;
+	import model.UserData;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -25,7 +26,8 @@ package view.Bullet
 		
 		private function drawBulletForTipImg():void
 		{
-			_bulletForTipImg = new Image(Assets.getAtlas().getTexture(_bulletName));
+			
+			_bulletForTipImg = new Image(Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(_bulletName));
 			_bulletForTipImg.pivotX = _bulletForTipImg.width * 0.5;
 			_bulletForTipImg.pivotY = _bulletForTipImg.height * 0.5;
 			addChild(_bulletForTipImg);
@@ -33,7 +35,7 @@ package view.Bullet
 		
 		public function showNextBulletTip(bulletData:BulletData):void{
 			var nextBulletName:String = bulletData.bulletName + "2";
-			_bulletForTipImg.texture = Assets.getAtlas().getTexture(nextBulletName);
+			_bulletForTipImg.texture = Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(nextBulletName);
 		}
 
 /*-----------------------------getter and setter----------------------------*/

@@ -43,31 +43,33 @@ package view.SkillBar
 			bulletData = new BulletData();
 			_keyboardIndex = keyIndex;
 			drawBulletBoxBg();
+			drawSkillSelectedAni();
 			drawNumTxt();
 			drawKeyIndexInfo();
-//			drawSkillSelectedAni();
 		}
 		
 		private function drawNumTxt():void
 		{
-			_numTxt = new TextField(LEN, 20, "", "Courier New", 10, 0x000000, true);
+			if(_numTxt)	return;
+			_numTxt = new TextField(LEN, LEN, "", "Courier New", 40, 0xffffff, true);
+			_numTxt.alpha = 0.5;
 			_numTxt.autoScale = true;
-			_numTxt.hAlign = HAlign.RIGHT;
-			_numTxt.x = 0;
-			_numTxt.y = 40;
+			_numTxt.hAlign = HAlign.LEFT;
+			_numTxt.x = 20;
+			_numTxt.y = 20;
 			addChild(_numTxt);
 		}
 		
 		private function drawKeyIndexInfo():void{
 			switch(_keyboardIndex){
 				case 1:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key1"));
+					_keyboardIndexImg = new Image(Assets.getPublicAtlas().getTexture("key1"));
 					break;
 				case 2:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key2"));
+					_keyboardIndexImg = new Image(Assets.getPublicAtlas().getTexture("key2"));
 					break;
 				case 3:
-					_keyboardIndexImg = new Image(Assets.getAtlas().getTexture("key3"));
+					_keyboardIndexImg = new Image(Assets.getPublicAtlas().getTexture("key3"));
 					break;
 			}
 			addChild(_keyboardIndexImg);
@@ -75,20 +77,20 @@ package view.SkillBar
 			_keyboardIndexImg.y = 50;
 		}
 		
-		/*private function drawSkillSelectedAni():void
+		private function drawSkillSelectedAni():void
 		{
-			skillSelectedAni = new MovieClip(Assets.getSkillSelectedAtlas().getTextures("skillAni"), 24);
+			skillSelectedAni = new MovieClip(Assets.getPublicAtlas().getTextures("skillAnime"), 10);
 			addChild(skillSelectedAni);
 			skillSelectedAni.x = -2;
 			skillSelectedAni.y = -2;
 			Starling.juggler.add(skillSelectedAni);
 			skillSelectedAni.stop();
 			skillSelectedAni.visible = false;
-		}*/
+		}
 		
 		private function drawBulletBoxBg():void
 		{
-			bulletBoxBg = new Image(Assets.getAtlas().getTexture("skillBoxBg"));
+			bulletBoxBg = new Image(Assets.getPublicAtlas().getTexture("skillBoxBg"));
 			addChild(bulletBoxBg);
 		}		
 		
@@ -105,15 +107,12 @@ package view.SkillBar
 				isEmpty = true;
 				_numTxt.text = "";
 				if(_specialBulletImg && contains(_specialBulletImg)){
-					removeChild(_specialBulletImg);
-					_specialBulletImg.dispose();
-					bulletData = null;
+					_specialBulletImg.removeFromParent(true);
+					_specialBulletImg = null;
 				}
 					
 			}else{
 				isEmpty = false;
-				if(!contains(_specialBulletImg))
-					addChild(_specialBulletImg);
 			}
 		}
 		
@@ -124,9 +123,13 @@ package view.SkillBar
 			}else{
 				_specialBulletImg.texture = value;
 			}
-			_specialBulletImg.x = -8;
+			_specialBulletImg.x = -4;
 			_specialBulletImg.y = -10;
 			_isEmpty = false;
+			if(!contains(_specialBulletImg)){
+				addChild(_specialBulletImg);
+				this.swapChildren(_numTxt, _specialBulletImg);
+			}
 		}
 
         /**该技能框是否为空-是否存放了特殊子弹*/

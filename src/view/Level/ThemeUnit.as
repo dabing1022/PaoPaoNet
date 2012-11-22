@@ -7,18 +7,20 @@ package view.Level
 	
 	import model.ThemeData;
 	
-	import starling.display.Quad;
+	import starling.core.Starling;
+	import starling.display.Button;
+	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starling.text.TextField;
 
 	public class ThemeUnit extends Sprite
 	{
-        private var bg:Sprite;
-		private var lockQuad:Quad;
+        private var bg:Image;
 		private var theme:ThemeData;
+		private var button:Button;
+		private var themeFontImg:Image;
+		private var themeIndexImg:Image;
 		public function ThemeUnit(themeId:uint)
 		{
 			super();
@@ -26,35 +28,49 @@ package view.Level
 			theme.themeId = themeId;
 			theme.locked = false;
 			
-			bg = ThemeBgFatory.makeThemeBg(themeId);
+			bg = new Image(Assets.getPublicAtlas().getTexture("themeUnitDown"));
 			addChild(bg);
 			
-			lockQuad = new Quad(60, 60, 0x000000);
-			lockQuad.alpha = 0.4;
-			addChild(lockQuad);
+			button = new Button(Assets.getPublicAtlas().getTexture("themeUnitNomal"), "", Assets.getPublicAtlas().getTexture("themeUnitDown"));
+			addChild(button);
+			button.visible = false;
 			
-			addEventListener(TouchEvent.TOUCH, onChooseTheme);
-			touchable = false;
+			themeFontImg = new Image(Assets.getPublicAtlas().getTexture("themeFont"));
+			addChild(themeFontImg);
+			themeFontImg.x = 12;
+			themeFontImg.y = 8;
+			
+			themeIndexImg = new Image(Assets.getPublicAtlas().getTexture("themeNum" + themeId));
+			addChild(themeIndexImg);
+			themeIndexImg.x = 28;
+			themeIndexImg.y = 50;
+			
+			themeFontImg.touchable = false;
+			themeIndexImg.touchable = false;
+			button.touchable = false;
+			bg.touchable = false;
 		}
 		
 		public function setCanPlayOrNot(canPlay:Boolean):void{
 			theme.locked = canPlay?false : true;
-			lockQuad.visible = canPlay?false : true;
+			button.visible = canPlay?true : false;
 			if(canPlay){
 				this.useHandCursor = true;
-				this.touchable = true;
+				button.touchable = true;
+				bg.removeFromParent(true);
+				bg = null;
+				if(!button.hasEventListener(Event.TRIGGERED))
+					button.addEventListener(Event.TRIGGERED, onChooseTheme);
 			}else{
 				this.useHandCursor = false;
-				this.touchable = false;
+				button.touchable = false;
+				if(button.hasEventListener(Event.TRIGGERED))
+					button.removeEventListener(Event.TRIGGERED, onChooseTheme);
 			}
 		}
 		
-		private function onChooseTheme(event:TouchEvent):void{
-			var touch:Touch = event.getTouch(stage);
-			if(touch.phase == TouchPhase.ENDED){
-				var e:LevelChooseEvent = new LevelChooseEvent(LevelChooseEvent.THEME_CHOOSE, true, theme.themeId);
-				dispatchEvent(e);
-			}
+		private function onChooseTheme(event:Event):void{
+			dispatchEvent(new LevelChooseEvent(LevelChooseEvent.THEME_CHOOSE, true, theme.themeId));
 		}
 	}
 }

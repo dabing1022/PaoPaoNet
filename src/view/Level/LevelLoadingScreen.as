@@ -72,7 +72,7 @@ package view.Level
 			addChild(img);
 			
 			loader = new Loader();
-			resUrl = "Resource" + _themeId + ".swf";
+			resUrl = "Theme" + _themeId + "Resource" + ".swf";
 			loaderContext = new LoaderContext();
 			loaderContext.applicationDomain = ApplicationDomain.currentDomain;
 			loader.contentLoaderInfo.addEventListener(flash.events.ProgressEvent.PROGRESS,onProgress);
@@ -87,7 +87,7 @@ package view.Level
 		}
 		
 		private function onComplete(e:flash.events.Event):void{
-			trace("load " + "关卡" + _themeId + "_" + _levelId + " complete...");
+			trace("load " + "主题" + _themeId + "资源" + " complete...");
 			loader.contentLoaderInfo.removeEventListener(flash.events.ProgressEvent.PROGRESS, onProgress);
 			loader.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, onComplete);
 			dispatchEventWith(starling.events.Event.COMPLETE);

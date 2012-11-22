@@ -15,8 +15,7 @@ package view.Battery
 	
 	public class BatteryView extends Sprite
 	{
-//		private var _batteryMc:MovieClip;
-		private var gun:Image;
+		private var _batteryMc:MovieClip;
 		internal var gunSpr:Sprite;
 		private var _base:Image;
 		internal var bulletForTipView:BulletForTipView;
@@ -42,21 +41,19 @@ package view.Battery
 		
 		private function drawBattery():void
 		{
-			//			_batteryMc = new MovieClip(Assets.getAtlas().getTextures("gun"), 20);
-			//			_batteryMc.stop();
-			//			Starling.juggler.add(_batteryMc);
-			//			addChild(_batteryMc);
-			gunSpr = new Sprite();
+			_batteryMc = new MovieClip(Assets.getPublicAtlas().getTextures("gun"), 20);
+			_batteryMc.stop();
+			Starling.juggler.add(_batteryMc);
 			
-			gun = new Image(Assets.getAtlas().getTexture("gun"));
+			gunSpr = new Sprite();
 			addChild(gunSpr);
 			
 			var colorName:String = "color" + _bulletData.bulletId;
-			_bulletForTipColorImg = new Image(Assets.getAtlas().getTexture(colorName));
+			_bulletForTipColorImg = new Image(Assets.getPublicAtlas().getTexture(colorName));
 			_bulletForTipColorImg.pivotX = _bulletForTipColorImg.width * 0.5;
 			_bulletForTipColorImg.pivotY = _bulletForTipColorImg.height * 0.5;
 			
-			gunSpr.addChild(gun);
+			gunSpr.addChild(_batteryMc);
 			gunSpr.addChild(_bulletForTipColorImg);
 			_bulletForTipColorImg.x = 90;
 			_bulletForTipColorImg.y = 36;
@@ -64,7 +61,7 @@ package view.Battery
 			gunSpr.pivotY = 38;
 			gunSpr.x = 40;
 			gunSpr.y = 30;
-			_base = new Image(Assets.getAtlas().getTexture("battery"));
+			_base = new Image(Assets.getPublicAtlas().getTexture("battery"));
 			addChild(_base);
 		}
 		
@@ -81,15 +78,15 @@ package view.Battery
 			bulletForTipView.showNextBulletTip(nextBulletData);
 			
 			var colorName:String = "color" + nextBulletData.bulletId;
-			_bulletForTipColorImg.texture = Assets.getAtlas().getTexture(colorName)
+			_bulletForTipColorImg.texture = Assets.getPublicAtlas().getTexture(colorName)
 		}
 		
-		/*public function gunBang():void{
+		public function gunBang():void{
 			if(!_batteryMc.isPlaying)
 				_batteryMc.play();
-		}*/
+		}
 		
-		/*public function stopFire():void{
+		public function stopFire():void{
 			if(_batteryMc.isPlaying){
 				if(_batteryMc.currentFrame == 1){
 					_batteryMc.stop();
@@ -97,6 +94,6 @@ package view.Battery
 					_batteryMc.play();
 				}
 			}
-		}*/
+		}
 	}
 }
