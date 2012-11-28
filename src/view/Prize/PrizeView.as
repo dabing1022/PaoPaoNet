@@ -155,7 +155,7 @@ package view.Prize
 			ShakeObjUtils.getInstance().shakeObj(this, 1, 100, deg2rad(20));
         }
 		/**
-		 * 当飞行物为特殊子弹被打下来的时候，进入技能栏
+		 * 当飞行物为特殊子弹被打下来的时候，保存到技能栏
 		 */
 		public function getEndCoord(bulletId:uint):Vector2D{
 			var endX:int;

@@ -337,7 +337,6 @@ package
 			for(i = 0; i < len; i++){
 				if(PrizeManager.getInstance().prizeVec[i].prizeData.primaryKey == obj.prizeId){
 					var prize:PrizeView = PrizeManager.getInstance().prizeVec[i];
-					trace("&&&&&&&&&&&&&&&&Main 342-----------------" + prize);
 					var des:Vector2D = prize.getEndCoord(bulletData.bulletId);
 					var tween:Tween = new Tween(prize, 1.0, Transitions.EASE_OUT);
 					tween.animate("x", des.x);
