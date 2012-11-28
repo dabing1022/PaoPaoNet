@@ -53,6 +53,8 @@ package view.Prize
 		private var _pathThreshold:uint = 60;
 		private var _pathArr:Array;
 		public static const FACTOR:Number = 0.5;
+		
+		private var priceImg:Image;
 		public function PrizeView(prizeData:PrizeData):void
 		{
 			super();
