@@ -42,6 +42,8 @@ package
 		public static const INTERRUPT_GAME:String = "1016";
 		/**关闭浏览器*/
 		public static const CLOSE:String ="1017";
+		/**错误*/
+		public static const ERROR:String = "9999";
 
 	}
 }

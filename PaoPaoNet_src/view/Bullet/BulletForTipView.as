@@ -38,7 +38,7 @@ package view.Bullet
 			_bulletForTipImg.y = 4;
 			addChild(_bulletForTipImg);
 			
-			var colorName:String = "color" + _bulletData.bulletId;
+			var colorName:String = "color" + _bulletData.colorId;
 			_bulletForTipColorImg = new Image(Assets.getAtlas().getTexture(colorName));
 			addChild(_bulletForTipColorImg);
 			_bulletForTipColorImg.x = 10;
@@ -52,7 +52,7 @@ package view.Bullet
 		
 		public function showNextBulletTip(bulletData:BulletData):void{
 			var nextBulletName:String = bulletData.bulletName + "1";
-			var colorName:String = "color" + bulletData.bulletId;
+			var colorName:String = "color" + bulletData.colorId;
 			_bulletForTipImg.texture = Assets.getAtlas().getTexture(nextBulletName);
 			_bulletForTipColorImg.texture = Assets.getAtlas().getTexture(colorName)
 		}

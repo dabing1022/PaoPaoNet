@@ -8,6 +8,8 @@ package
 	
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
+	
+	import utils.DebugConsole;
 
 	public class Assets
 	{
@@ -73,6 +75,7 @@ package
 				return ApplicationDomain.currentDomain.getDefinition(name) as Class;
 			}catch(e:IllegalOperationError){
 				throw e;
+				DebugConsole.addDebugLog(e.message);
 			}
 			return null;
 		}

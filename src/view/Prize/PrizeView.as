@@ -14,10 +14,14 @@ package view.Prize
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.text.BitmapFont;
+	import starling.text.TextField;
 	import starling.textures.Texture;
+	import starling.utils.Color;
+	import starling.utils.HAlign;
 	import starling.utils.deg2rad;
 	
-	import utils.LevelConfigXmlUtils;
+	import utils.LevelDiscriptionXmlUtils;
 	import utils.ShakeObjUtils;
 	import utils.SoundManager;
 	import utils.Vector2D;
@@ -54,7 +58,7 @@ package view.Prize
 		private var _pathArr:Array;
 		public static const FACTOR:Number = 0.5;
 		
-		private var priceImg:Image;
+		private var _scoreNumTxt:TextField;
 		public function PrizeView(prizeData:PrizeData):void
 		{
 			super();
@@ -66,18 +70,21 @@ package view.Prize
 			_steeringForce = new Vector2D();
 			_pathArr = new Array();
 			maxSpeed = prizeData.speed * FACTOR;
-            /**根据名字后缀检测飞行物的类型
-             * 后缀带1为特殊子弹
-             * 没带1为普通飞行物
-             */
+           
+			//add prizeImg
+			_prizeImg = new Image(Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(prizeData.prizeName));
+			addChild(_prizeImg);
+			
+			/**根据名字后缀检测飞行物的类型
+			 * 后缀带1为特殊子弹
+			 * 没带1为普通飞行物
+			 */
 			if(prizeData.prizeName.charAt(prizeData.prizeName.length - 1) == "1"){
 				_type = "bullet";
 			}else{
 				_type = "prize";
+				addScoreNumTxt();
 			}
-			//add prizeImg
-			_prizeImg = new Image(Assets.getThemeAtlas(UserData.getInstance().themeId).getTexture(prizeData.prizeName));
-			addChild(_prizeImg);
 			
 			drawEnergonContainer();
 			drawHitRect();
@@ -104,6 +111,26 @@ package view.Prize
 					_energonColorIdVec.push(id);
 				}
 			}
+		}
+		
+		private function addScoreNumTxt():void{
+			var tempCls:Class = Assets.getClass("PublicResource_FloatScoreFontImg");
+			var bmp:Bitmap = new tempCls();
+			var texture:Texture = Texture.fromBitmap(bmp);
+			tempCls = Assets.getClass("PublicResource_FloatScoreFontXml");
+			var xml:XML = XML(new tempCls());
+			var bmpFont:BitmapFont = new BitmapFont(texture, xml);
+			TextField.registerBitmapFont(bmpFont,"scoreFontAlpha");
+			
+			_scoreNumTxt = new TextField(90, 50, "0", "scoreFontAlpha");
+			_scoreNumTxt.fontSize = BitmapFont.NATIVE_SIZE;
+			_scoreNumTxt.color = Color.WHITE;
+			_scoreNumTxt.hAlign = HAlign.LEFT;
+			_scoreNumTxt.alpha = 0.4;
+			addChild(_scoreNumTxt);
+			_scoreNumTxt.x = 10;
+			_scoreNumTxt.y = -30;
+			_scoreNumTxt.text = prizeData.score.toString();
 		}
 		
 		//当泡泡打中道具的时候，对能量块进行处理
@@ -139,8 +166,8 @@ package view.Prize
 
         /**淡出销毁处理*/
         public function fadeOutAndDestroy():void{
-			var scoreAdd:uint = this.prizeData.price * 10;       //分数按照价格的10倍处理
-			InfoBoardViewManager.getInstance().score += scoreAdd;
+			var scoreAdd:uint = this.prizeData.score ;       //分数按照价格的10倍处理
+			//InfoBoardViewManager.getInstance().score += scoreAdd;
 			FloatScoreManager.getInstance().showFloatScore(this.x, this.y, scoreAdd);
 				
 			var tween:Tween = new Tween(this, 1.0, Transitions.EASE_OUT);

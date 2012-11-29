@@ -1,0 +1,17 @@
+<levelDiscription>
+    <discription themeId="1" levelId="1">
+	这是第一个关卡。右边的墙壁回收.拉拉啦啦
+	</discription>
+    <discription themeId="1" levelId="2">
+		这是第二个关卡.嘟嘟嘟
+	</discription>		
+    <discription themeId="1" levelId="3">
+		这是第三个关卡.当当当
+	</discription>			
+    <discription themeId="1" levelId="4">
+		这是第四个关卡.嘟嘟嘟
+	</discription>
+    <discription themeId="1" levelId="5">
+		这是第五个关卡.嘟嘟嘟
+	</discription>
+</levelDiscription>

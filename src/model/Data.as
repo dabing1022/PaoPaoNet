@@ -21,6 +21,7 @@ package model
 				bullet.bulletName = arr[i].bulletName;
 				bullet.price = arr[i].price;
 				bullet.speed = arr[i].speed;
+				bullet.colorId = arr[i].colorId;
 				bulletVec.push(bullet);
 			}
 		}
@@ -35,6 +36,7 @@ package model
 				bullet.bulletName = arr[i].bulletName;
 				bullet.price = arr[i].price;
 				bullet.speed = arr[i].speed;
+				bullet.colorId = arr[i].colorId;
 				newAddBulletVec.push(bullet);
 			}
 			return newAddBulletVec;

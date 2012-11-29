@@ -15,7 +15,7 @@ package view.InfoBoard
 	{
 		private var _infoBoardView:InfoBoardView;
 		private static var _instance:InfoBoardViewManager;
-		private var _money:uint;
+		private var _money:int;
 		private var _score:uint;
 		private var _themeId:uint;
 		private var _levelId:uint;
@@ -87,7 +87,7 @@ package view.InfoBoard
 			_inGameSystemPanel = null;
 		}
 		
-		public function set money(value:uint):void
+		public function set money(value:int):void
 		{
 			_money = value;
 			_infoBoardView.moneyView.setMoney(_money);
@@ -105,7 +105,7 @@ package view.InfoBoard
 			_infoBoardView.levelInfo.setLevelName(_themeId, _levelId);
 		}
 
-		public function get money():uint
+		public function get money():int
 		{
 			return _money;
 		}

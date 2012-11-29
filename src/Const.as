@@ -5,6 +5,8 @@ package{
      * 定义常用的常量
      */
      public class Const{
+		public static const PUBLIC_RES_URL:String = "PublicResource.swf";
+		public static const LEVEL_DISCRIPTION_URL:String = "LevelDiscription.xml";
         /**舞台的宽和高*/
         public static const WIDTH:uint = 900;
         public static const HEIGHT:uint = 580;

@@ -27,6 +27,8 @@ package view.Battery
 		{
 			_bulletData = bulletData;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			this.touchable = false;
 		}
 		
 		private function onAddedToStage(event:Event):void
@@ -48,7 +50,7 @@ package view.Battery
 			gunSpr = new Sprite();
 			addChild(gunSpr);
 			
-			var colorName:String = "color" + _bulletData.bulletId;
+			var colorName:String = "color" + _bulletData.colorId;
 			_bulletForTipColorImg = new Image(Assets.getPublicAtlas().getTexture(colorName));
 			_bulletForTipColorImg.pivotX = _bulletForTipColorImg.width * 0.5;
 			_bulletForTipColorImg.pivotY = _bulletForTipColorImg.height * 0.5;
@@ -77,7 +79,7 @@ package view.Battery
 		public function showNextBulletTip(nextBulletData:BulletData):void{
 			bulletForTipView.showNextBulletTip(nextBulletData);
 			
-			var colorName:String = "color" + nextBulletData.bulletId;
+			var colorName:String = "color" + nextBulletData.colorId;
 			_bulletForTipColorImg.texture = Assets.getPublicAtlas().getTexture(colorName)
 		}
 		

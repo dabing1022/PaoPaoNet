@@ -45,9 +45,16 @@ package view.Prize
 				case 8:
 					texture = Assets.getPublicAtlas().getTexture("color8");
 					break;
+				case 9:
+					texture = Assets.getPublicAtlas().getTexture("color9");
+					break;
+				case 10:
+					texture = Assets.getPublicAtlas().getTexture("color10");
+					break;
 			}
 			img = new Image(texture);
 			addChild(img);
+			this.touchable = false;
 		}
 		
 		/**能量块淡出*/

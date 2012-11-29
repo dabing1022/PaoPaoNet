@@ -49,6 +49,8 @@ package view.InfoBoard
 			
 			_levelNumSpr = new Sprite();
 			addChild(_levelNumSpr);
+			
+			this.touchable = false;
 		}
 		
 		public function setLevelName(themeId:uint,levelId:uint):void{

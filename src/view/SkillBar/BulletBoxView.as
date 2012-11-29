@@ -14,7 +14,7 @@ package view.SkillBar
 	import starling.textures.Texture;
 	import starling.utils.HAlign;
 	
-	import utils.LevelConfigXmlUtils;
+	import utils.LevelDiscriptionXmlUtils;
 	
 	public class BulletBoxView extends Sprite
 	{
@@ -46,6 +46,7 @@ package view.SkillBar
 			drawSkillSelectedAni();
 			drawNumTxt();
 			drawKeyIndexInfo();
+			this.touchable = false;
 		}
 		
 		private function drawNumTxt():void
@@ -161,7 +162,5 @@ package view.SkillBar
 					skillSelectedAni.stop();
 			}
 		}
-
-
 	}
 }

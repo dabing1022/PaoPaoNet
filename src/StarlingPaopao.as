@@ -1,14 +1,18 @@
 package
 {
+	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.display3D.Context3DRenderMode;
 	import flash.events.Event;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	import flash.utils.setTimeout;
 	
 	import starling.core.Starling;
+	
+	import utils.DebugConsole;
 	
 	[SWF(width="900", height="580", frameRate="60", backgroundColor="0xf3f3f3")]
 	public class StarlingPaopao extends Sprite
@@ -17,11 +21,11 @@ package
 		private var customMenu:ContextMenuItem;
 		private var versionMenu:ContextMenuItem;
 		private var mStarling:Starling;
+		
 		public function StarlingPaopao()
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-			
 			showRightClickMenu();
 			setTimeout(initStarling,1000);
 		}
@@ -39,17 +43,22 @@ package
 		
 		private function initStarling():void{
 			Starling.handleLostContext = true;
-			mStarling = new Starling(Main,stage);
+			mStarling = new Starling(Main,stage, null, null, Context3DRenderMode.AUTO);
 			mStarling.antiAliasing = 1;
 			mStarling.showStats = true;
 			mStarling.start();
+			DebugConsole.addDebugLog("");
 			mStarling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
 		}
 		
 		private function onContextCreated(event:Event):void
 		{
-			if (Starling.context.driverInfo.toLowerCase().indexOf("software") != -1)
+			if (Starling.context.driverInfo.toLowerCase().indexOf("software") != -1){
 				Starling.current.nativeStage.frameRate = 60;
+				DebugConsole.addDebugLog("Display Driver: software.");
+			}else{
+				DebugConsole.addDebugLog("Display Driver: DIRECTX.");
+			}
 		}
 	}
 }

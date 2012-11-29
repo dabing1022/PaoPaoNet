@@ -42,6 +42,8 @@ package view.InfoBoard
 			_scoreSpr.y = 5;
 			
 			setScore(0);
+			
+			this.touchable = false;
 		}
 		
 		public function setScore(value:uint):void{

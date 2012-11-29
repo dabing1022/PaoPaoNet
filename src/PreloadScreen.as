@@ -11,6 +11,7 @@ package
 	import flash.system.LoaderContext;
 	import flash.system.Security;
 	
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -18,14 +19,15 @@ package
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	
-	import utils.LevelConfigXmlUtils;
+	import utils.DebugConsole;
+	import utils.LevelDiscriptionXmlUtils;
 
 	public class PreloadScreen extends Sprite
 	{
 		private var frameBmpd:BitmapData;
 		private var frameLine:Shape;
 		private var squareQuad:Quad;
-		private static const RES_URL:String = "PublicResource.swf";
+		private static const RES_URL:String = Const.PUBLIC_RES_URL;
 		private var loader:Loader;
 		private var loaderContext:LoaderContext;
 		private var percentTxt:TextField;
@@ -83,9 +85,19 @@ package
 		
 		private function onComplete(e:flash.events.Event):void{
 			trace("load public resource complete...");
+			DebugConsole.addDebugLog("Load public resource complete...");
 			loader.contentLoaderInfo.removeEventListener(flash.events.ProgressEvent.PROGRESS, onProgress);
 			loader.contentLoaderInfo.removeEventListener(flash.events.Event.COMPLETE, onComplete);
+			
+			LevelDiscriptionXmlUtils.getInstance().loadXml(Const.LEVEL_DISCRIPTION_URL);
+			LevelDiscriptionXmlUtils.getInstance().addEventListener(flash.events.Event.COMPLETE, onLoadLevelDiscriptionComplete);
+		}
+		
+		private function onLoadLevelDiscriptionComplete(e:flash.events.Event):void{
 			dispatchEventWith(starling.events.Event.COMPLETE);
+			LevelDiscriptionXmlUtils.getInstance().removeEventListener(flash.events.Event.COMPLETE, onLoadLevelDiscriptionComplete);
+			trace("关卡描述载入完毕。");
+			DebugConsole.addDebugLog("Load level discription complete...");
 		}
 	}
 }

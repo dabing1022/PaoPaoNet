@@ -43,6 +43,7 @@ package view.InfoBoard
 			addChild(_scoreNumTxt);
 			_scoreNumTxt.x = 10;
 			
+			this.touchable = false;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

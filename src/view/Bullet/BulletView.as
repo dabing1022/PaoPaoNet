@@ -11,7 +11,7 @@ package view.Bullet
 	import starling.events.Event;
 	import starling.textures.Texture;
 	
-	import utils.LevelConfigXmlUtils;
+	import utils.LevelDiscriptionXmlUtils;
 	import utils.Vector2D;
 	
 	public class BulletView extends Sprite

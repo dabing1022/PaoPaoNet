@@ -7,6 +7,7 @@ package model
 		public var bulletName:String;
 		public var speed:Number;
 		public var price:Number;
+		public var colorId:uint;
 		public function BulletData()
 		{
 		}

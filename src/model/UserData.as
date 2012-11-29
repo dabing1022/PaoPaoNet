@@ -10,7 +10,8 @@ package model
 		private var _userName:String;
 		private var _nickName:String;
 		private var _passWord:String;
-		private var _money:uint;
+		private var _money:int;
+		public var score:uint;
 		private var _canPlayTheme:uint;
 		public var themeId:uint;
 		public var levelIndex:uint;	//当前关卡在某个主题中的索引号
@@ -71,12 +72,12 @@ package model
 			_passWord = value;
 		}
 
-		public function get money():uint
+		public function get money():int
 		{
 			return _money;
 		}
 
-		public function set money(value:uint):void
+		public function set money(value:int):void
 		{
 			_money = value;
 			dispatchEvent(new UserEvent(UserEvent.MONEY_CHANGE, false, _money));

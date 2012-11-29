@@ -44,8 +44,8 @@ package utils
 				socket.writeBytes(b);
 				socket.flush();
 			}catch(e:IOError){
-//				dispatchEvent(new ErrorEvent(ErrorEvent.ERROR,false,false,"发送数据失败."));
 				trace(e.message);
+				DebugConsole.addDebugLog("Send message failure.==>IOError.");
 			}
 		}
 	}

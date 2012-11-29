@@ -19,6 +19,7 @@ package view.SkillBar
 		{
 			super();
 			init();
+			this.touchable = false;
 		}
 		
 		private function init():void{

@@ -42,6 +42,8 @@ package view.InfoBoard
 			addChild(_numSpr);
 			_numSpr.x = 50;
 			_numSpr.y = 5;
+			
+			this.touchable = false;
 		}
 		
 		public function setMoney(value:uint):void{

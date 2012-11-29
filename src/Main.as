@@ -9,6 +9,7 @@ package
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.events.TimerEvent;
 	import flash.net.Socket;
 	import flash.net.URLLoader;
@@ -41,9 +42,9 @@ package
 	import starling.textures.Texture;
 	
 	import utils.CommunicateUtils;
+	import utils.DebugConsole;
 	import utils.LayerUtils;
-	import utils.LevelConfigXmlUtils;
-	import utils.SocketUtil;
+	import utils.LevelDiscriptionXmlUtils;
 	import utils.SoundManager;
 	import utils.Vector2D;
 	
@@ -54,6 +55,7 @@ package
 	import view.InfoBoard.FloatScoreManager;
 	import view.InfoBoard.InfoBoardViewManager;
 	import view.Level.LevelContainer;
+	import view.Level.LevelDiscriptionManager;
 	import view.Level.LevelLoadingScreen;
 	import view.Level.LevelUnit;
 	import view.Level.ThemeContainer;
@@ -64,15 +66,13 @@ package
 	import view.Recycle.RecycleBarView;
 	import view.Recycle.RecycleManager;
 	import view.SkillBar.SkillBarManager;
-	import view.login.LoginScreen;
+	import view.Login.LoginScreen;
 	
 	public class Main extends Sprite
 	{
 		private var socket:Socket;
-		private var host:String = "192.168.1.213";
+		private var host:String = "192.168.1.222";
 		private var port:uint = 6667;
-//		private var ipLoader:URLLoader;
-//		private var ipURL:String = "http://192.168.1.212:8080/ddz/jsp/getIP.jsp";
 		/**反复连接状态*/
 		private var reconnectOrNot:Boolean = false; //当没连接上时候，默认没有反复连接
 		/**socket是否连接*/
@@ -118,17 +118,18 @@ package
 			preload.addEventListener(starling.events.Event.COMPLETE,onLoadComplete);
 		}
 		
+		
+		
 		private function connectServer():Socket
 		{
 			if (socket == null){
 				socket = new Socket();
 				socket.timeout = 40000;			
-				SocketUtil.currentSocket = socket;
 				socket.addEventListener(flash.events.Event.CONNECT, onConnect);
 				socket.addEventListener(flash.events.ProgressEvent.SOCKET_DATA, onSocketData);
-//				socket.addEventListener(flash.events.Event.CLOSE, onClose);
+				socket.addEventListener(flash.events.Event.CLOSE, onClose);
 				socket.addEventListener(flash.events.IOErrorEvent.IO_ERROR, onIoError);
-//				socket.addEventListener(flash.events.SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				socket.addEventListener(flash.events.SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 			}
 			if (!socket.connected)
 			{ 
@@ -137,11 +138,21 @@ package
 			return socket;
 		}
 		
+		private function onClose(e:flash.events.Event):void{
+			DebugConsole.addDebugLog("Socket closed.");
+		}
+		
+		private function onSecurityError(e:flash.events.SecurityErrorEvent):void{
+			DebugConsole.addDebugLog("SecurityError.");
+		}
+		
+		
 		/**
 		 * 在出现输入/输出错误并导致发送或加载操作失败时调度
 		 */
 		private function onIoError(event:flash.events.IOErrorEvent):void{
 			trace("IO错误: = " + event.text);
+			DebugConsole.addDebugLog("IOERROR: = " + event.text + "===Cannot connect the server.");
 			tryReconnect();
 		}
 		
@@ -182,6 +193,7 @@ package
 		{
 			reconnectOrNot = true;
 			trace("连接成功！");
+			DebugConsole.addDebugLog("Connect Server Success!");
 		}		
 		
 		private var len:int = 0;
@@ -211,6 +223,7 @@ package
 				}
 			}catch(error:Error){
 				trace(error.message);
+				DebugConsole.addDebugLog(error.message);
 			}
 			
 		}
@@ -219,6 +232,9 @@ package
 			switch(cmd){
 				case Command.HEARTBEAT:
 					onHeartBeat();
+					break;
+				case Command.ERROR:
+					onError(content);
 					break;
 				case Command.LOGIN:
 					onUserLogin(content);
@@ -252,6 +268,23 @@ package
 					break;
 				case Command.BULLET_EXCHANGE_MONEY:
 					onBulletExchangeMoney(content);
+					break;
+			}
+		}
+		
+		private function onError(content:String):void{
+			switch(content){
+				case ErrorCode.NO_USER:
+					DebugConsole.addDebugLog("Cannot find the user.Please check the name and the password is correct.");
+					break;
+				case ErrorCode.NO_THEME_BULLET:
+					DebugConsole.addDebugLog("No theme bullet found.");
+					break;
+				case ErrorCode.NO_THEME_LEVEL:
+					DebugConsole.addDebugLog("No theme level found.");
+					break;
+				case ErrorCode.USER_LOGINED:
+					DebugConsole.addDebugLog("The user has logined.");
 					break;
 			}
 		}
@@ -329,6 +362,12 @@ package
 			bulletData.bulletName = obj.bulletName;
 			bulletData.speed = obj.speed;
 			bulletData.price = obj.price;
+			bulletData.colorId = obj.colorId;
+			
+			UserData.getInstance().money = obj.userMoney;
+			UserData.getInstance().score = obj.score;
+			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+			InfoBoardViewManager.getInstance().score = UserData.getInstance().score;
 			
 			if(!PrizeManager.getInstance())	return;//防止出现收到Bullt-over命令和Level—over命令引起的PrizeManager为空
 			//被击落的特殊子弹将放到技能栏里面
@@ -362,10 +401,12 @@ package
 		private function onPrizeOver(content:String):void
 		{
 			var obj:Object = com.adobe.serialization.json.JSON.decode(content);
-			//score更新
-			//money更新
+			
 			UserData.getInstance().money = obj.userMoney;
+			UserData.getInstance().score = obj.score;
 			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
+			InfoBoardViewManager.getInstance().score = UserData.getInstance().score;
+			
 			//淡出移除被击落的一般飞行物
 			var len:uint = PrizeManager.getInstance().prizeVec.length;
 			var i:uint;
@@ -399,6 +440,7 @@ package
 		/**选择关卡*/
 		private function onLevelChoose(event:LevelChooseEvent):void
 		{
+			DebugConsole.addDebugLog("Now choose theme " + UserData.getInstance().themeId);
 			UserData.getInstance().themeId = event.data.themeId;
 			UserData.getInstance().levelIndex = event.data.levelIndex;
 			UserData.getInstance().levelId = event.data.levelId;
@@ -433,6 +475,7 @@ package
 			}else{
 				addWaiingNextLevelScreen(UserData.getInstance().themeId, UserData.getInstance().levelIndex)//伪读条用于过渡
 			}
+			DebugConsole.addDebugLog("Loading theme " + UserData.getInstance().themeId + ", level " + UserData.getInstance().levelId);
 		}
 		
 		private function onFreshGameCoin(content:String):void{
@@ -456,6 +499,7 @@ package
 		
 		/**初始化游戏界面*/
 		private function initGame():void{
+			DebugConsole.addDebugLog("Init theme " + UserData.getInstance().themeId + ", " + "level " + UserData.getInstance().levelId + " data!");
 			bulletFiredNum = 0;
 			addInGameBg();//加入游戏背景
 			BulletManager.getInstance().start();
@@ -470,6 +514,7 @@ package
 			InfoBoardViewManager.getInstance().start();
 			InfoBoardViewManager.getInstance().money = UserData.getInstance().money;
 			InfoBoardViewManager.getInstance().updateLevelInfo(UserData.getInstance().themeId,UserData.getInstance().levelIndex);
+			LevelDiscriptionManager.getInstance().twinkleLevelDiscription(UserData.getInstance().themeId, UserData.getInstance().levelIndex);
 			SoundManager.getInstance().playSound("bgm", true, int.MAX_VALUE);
 			
 			var obj:Object = new Object();
@@ -492,10 +537,12 @@ package
 		
 		private function onMute():void{
 			SoundManager.getInstance().muteSound();
+			DebugConsole.addDebugLog("Mute the sound.");
 		}
 		
 		private function onUnmute():void{
 			SoundManager.getInstance().muteSound();
+			DebugConsole.addDebugLog("Unmute the sound.");
 		}
 		
 		private function onInGameChooseTheme(event:UserEvent):void
@@ -615,8 +662,12 @@ package
 			
 		}
 		
-		//单击舞台过快的时候，炮台动画不能够完整的播放完，待修改 --------to be finished
 		private function checkAndFire():void{
+			if(UserData.getInstance().money <= 0){
+				InfoBoardViewManager.getInstance().money = 0;
+				BatteryManager.getInstance().stopFire();
+				return;
+			}
 			if(Data.getInstance().bulletVec){
 				if(reloadComplete && isFiring){
 					BatteryManager.getInstance().gunBang();
@@ -642,7 +693,7 @@ package
 						BulletManager.getInstance().bulletVec.splice(j,1);
 						bulletNum --;
 						//能量块的消失
-						var hasEnergon:Boolean = p.processEnergon(bullet.bulletData.bulletId);
+						var hasEnergon:Boolean = p.processEnergon(bullet.bulletData.colorId);
 						if(hasEnergon){
 							var obj:Object = new Object();
 							obj.prizeId = p.prizeData.primaryKey;
@@ -676,9 +727,11 @@ package
 			
 			Data.getInstance().bulletVec.shift();
 			trace("当前子弹数目为： " + Data.getInstance().bulletVec.length);
+			DebugConsole.addDebugLog("Current bullet num is " + Data.getInstance().bulletVec.length);
 			if(bulletFiredNum % 10 == 0){ //每打10发子弹
 				trace("又打10发子弹了，准备向服务器请求新批子弹。。。。");
-				var obj:Object = new Object();
+				DebugConsole.addDebugLog("use out 10 bullets, ready to ask for bullets from server...");
+				var obj:Object = {};
 				obj.username = UserData.getInstance().userName;
 				obj.themeId = UserData.getInstance().themeId;
 				obj.levelId = UserData.getInstance().levelId;
@@ -787,6 +840,7 @@ package
 			var obj:Object = new Object();
 			obj.username = UserData.getInstance().userName;
 			obj.themeId = event.data;
+			UserData.getInstance().themeId = uint(event.data);
 			CommunicateUtils.getInstance().sendMessage(socket, Command.CHOOSE_THEME, obj);
 		}
 		

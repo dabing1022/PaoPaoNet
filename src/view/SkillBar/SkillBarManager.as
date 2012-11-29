@@ -10,7 +10,7 @@ package view.SkillBar
 	import starling.events.KeyboardEvent;
 	
 	import utils.LayerUtils;
-	import utils.LevelConfigXmlUtils;
+	import utils.LevelDiscriptionXmlUtils;
 	
 	import view.Battery.BatteryManager;
 	import view.Bullet.BulletForTipView;

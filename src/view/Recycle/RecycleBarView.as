@@ -45,6 +45,7 @@ package view.Recycle
 			contentImg.x = 5;
 			contentImg.y = 5;
 			addChild(contentImg);
+			this.touchable = false;
 		}
 		
 		private function onBulletNumChange(event:RecycleEvent):void

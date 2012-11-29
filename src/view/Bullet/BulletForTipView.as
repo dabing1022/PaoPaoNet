@@ -6,7 +6,7 @@ package view.Bullet
 	import starling.display.Image;
 	import starling.display.Sprite;
 	
-	import utils.LevelConfigXmlUtils;
+	import utils.LevelDiscriptionXmlUtils;
 
 	/**用于提示下一个出现的子弹*/
 	public class BulletForTipView extends Sprite

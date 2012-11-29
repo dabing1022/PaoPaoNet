@@ -45,6 +45,7 @@ package model
 			this.pathType    = obj.pathType;
 			this.status         = obj.status;
 			this.energon     = obj.energon;
+			this.price        = obj.price;
 			
 			var arr:Array = obj.pathStr;
 			var len:uint = arr.length;
